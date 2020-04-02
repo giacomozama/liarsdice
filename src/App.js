@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import ChatBar from "./components/ChatBar"
+import PlayerTurnPanel from "./components/PlayerTurnPanel"
+import Dimmer from './components/Dimmer'
+import PlayerInputPanel from './components/PlayerInputPanel'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let dimmer;
+
+export default class LiarsDice extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.playerName = "Jack"
+
+    this.dimmerRef = React.createRef(this.refs.dimmer)
+    this.dimmer = <Dimmer ref={this.dimmerRef}/>
+  }
+
+  componentDidMount() {
+    this.dimmerRef.current.dim()
+  }
+
+  render () {
+    return (
+      <div className="App">
+        
+        <ChatBar id="chat-bar"/>
+        {this.dimmer}
+        <PlayerInputPanel></PlayerInputPanel>
+        <div className="App-body">
+          <div className="main-content">
+            <PlayerTurnPanel playerName="Jack" panelColor="0" />
+            <PlayerTurnPanel playerName="Jack" panelColor="1" />
+            <PlayerTurnPanel playerName="Jack" panelColor="2" />
+            <PlayerTurnPanel playerName="Jack" panelColor="3" />
+            <PlayerTurnPanel playerName="Jack" panelColor="4" />
+            <PlayerTurnPanel playerName="Jack" panelColor="5" />
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;
