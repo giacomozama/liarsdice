@@ -4,6 +4,8 @@ import ChatBar from "./components/ChatBar"
 import PlayerTurnPanel from "./components/PlayerTurnPanel"
 import Dimmer from './components/Dimmer'
 import PlayerInputPanel from './components/PlayerInputPanel'
+import PlayerList from './components/PlayerList'
+import GameEventList from './components/GameEventList'
 
 let dimmer;
 
@@ -19,7 +21,7 @@ export default class LiarsDice extends React.Component {
   }
 
   componentDidMount() {
-    this.dimmerRef.current.dim()
+    //this.dimmerRef.current.dim()
   }
 
   render () {
@@ -28,15 +30,22 @@ export default class LiarsDice extends React.Component {
         
         <ChatBar id="chat-bar"/>
         {this.dimmer}
-        <PlayerInputPanel></PlayerInputPanel>
         <div className="App-body">
           <div className="main-content">
-            <PlayerTurnPanel playerName="Jack" panelColor="0" />
-            <PlayerTurnPanel playerName="Jack" panelColor="1" />
-            <PlayerTurnPanel playerName="Jack" panelColor="2" />
-            <PlayerTurnPanel playerName="Jack" panelColor="3" />
-            <PlayerTurnPanel playerName="Jack" panelColor="4" />
-            <PlayerTurnPanel playerName="Jack" panelColor="5" />
+            <div className="left-container">
+              <GameEventList></GameEventList>
+            </div>
+            <div className="center-container">
+              <PlayerTurnPanel playerName="Jack" panelColor="0" />
+              <PlayerTurnPanel playerName="Jack" panelColor="1" />
+              <PlayerTurnPanel playerName="Jack" panelColor="2" />
+              <PlayerTurnPanel playerName="Jack" panelColor="3" />
+              <PlayerTurnPanel playerName="Jack" panelColor="4" />
+              <PlayerTurnPanel playerName="Jack" panelColor="5" />
+            </div>
+            <div className="right-container">
+              <PlayerList></PlayerList>
+            </div>
           </div>
         </div>
       </div>

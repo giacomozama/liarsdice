@@ -12,18 +12,19 @@ input {
 }
 
 .App {
-  min-height: 100vh;
+  height: 100vh;
   text-align: left;
   font-family: Montserrat;
   display: flex;
   flex-direction: column;
+  min-width: 900px;
 }
 
 .App-body {
+  height: inherit;
   background-color: #121212;
-  min-height: 100vh;
-  overflow:auto;
   font-size: calc(10px + 2vmin);
+  min-width: 900px;
 }
 
 .App-link {
@@ -43,17 +44,44 @@ input {
 }
 
 .main-content {
+  height: inherit;
   z-index: 50;
   display:flex;
+  min-width: 900px;
+}
+
+.right-container {
+  flex: 1 1 27%;
+  padding: 16px;
+  box-sizing: border-box;
+  min-width: 250px;
+}
+
+.center-container {
+  flex: 1 1 40%;
+  background-color: #101010;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
+  box-sizing: border-box;
+  padding: 0 16px 0 16px;
+  z-index: 51;
+  min-width: 400px;
   overflow: auto;
-  flex-direction: column;
+  scrollbar-width: none;
+}
+
+.center-container::-webkit-scrollbar {
+  display: none;
+}
+
+.left-container {
+  flex: 1 1 33%;
+  min-width: 250px;
 }
 
 .username-label {
   font-size: 28px;
   padding-left:12px;
-  text-shadow: 2px 4px 2px rgba(0,0,0,0.4); 
-  vertical-align: middle;
+  text-shadow: 2px 4px 2px rgba(0,0,0,0.4);
   margin-bottom: 20px ;
   display: inline-block;
   color: whitesmoke;
@@ -99,6 +127,57 @@ input {
   background-color: #0d7e7e;
 }
 
+.player-list {
+  padding: 16px;
+  display: flex;
+  background-color: #101010;
+  box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
+  border-radius: 10px;
+  flex-direction: column;
+}
+
+.player-list-item {
+  user-select: none;
+  margin-bottom: 16px;
+  padding: 8px;
+  height: 22px;
+  box-shadow: inset 0 -3px 0 0 rgba(0,0,0,0.4);
+  font-size: 16px;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  text-shadow: 1px 2px 1px rgba(0,0,0,0.4);
+}
+
+.player-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.player-list-item[pid='0'] {
+  background-color: #b00000;
+}
+
+.player-list-item[pid='1'] {
+  background-color: #00b000;
+}
+
+.player-list-item[pid='2'] {
+  background-color: #003090;
+}
+
+.player-list-item[pid='3'] {
+  background-color: #e0b000;
+}
+
+.player-list-item[pid='4'] {
+  background-color: #d00050;
+}
+
+.player-list-item[pid='5'] {
+  background-color: #0d7e7e;
+}
+
 .turn-panel-username {
   font-size: 22px;
   font-weight: 500;
@@ -114,12 +193,12 @@ input {
 .turn-panel-inner {
   background-color: rgba(0,0,0,0.3);
   border-radius: 10px;
+  padding: 10px 0 8px 0;
   box-shadow: inset 0 6px 0px 0px rgba(0,0,0,0.3),
   inset 0 -2px 16px 4px rgba(0,0,0,0.1);
-  height:fit-content;
   display: flex;
   flex-direction: row;
-  vertical-align: middle;
+  justify-content: space-around;
   margin:8px 8px 16px 8px;
 }
 
@@ -128,12 +207,22 @@ input {
   background-color: rgba(10,10,10,0.4);
   border-radius: 10px;
   border: none;
-  height: 48px;
-  padding:2px 4px 2px 4px;
-  margin:10px 10px 8px 10px;
-  box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4),
-  0 3px 2px 0 rgba(0,0,0,0.2);
-  font-size: 48px;
+  flex: 0 0 50px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 46px;
+  box-shadow: 0 3px 2px 0 rgba(0,0,0,0.2);
+}
+
+.fa-question {
+  font-size: 28px;
+}
+
+.fa-times {
+  font-size: 28px;
 }
 
 .chat-bar {
@@ -142,11 +231,12 @@ input {
   top: 0;
   padding: 16px;
   width: 300px;
-  opacity: 1;
+  opacity: 0.8;
   display: flex;
   flex-direction: column;
   position: fixed;
   height: 100vh;
+  box-sizing: border-box;
   box-shadow: 0px 0 8px 0px rgba(0,0,0,0.4),
   inset 1px 0px 1px 0px rgba(255,255,255,0.08);
   background-color: #101010;
@@ -185,7 +275,7 @@ input {
   flex-direction: row;
   align-items: flex-end;
   height: 40px;
-  margin-bottom: -32px;
+  margin-bottom: -64px;
   flex: 0 0 auto;
   border-radius: 10px;
 }
@@ -280,7 +370,7 @@ input {
   border-radius: 50%;
   background-color: #333333;
   right: 96px;
-  bottom: 32px;
+  bottom: 0px;
   flex: 0 0 auto;
   height: 64px;
   width: 64px;
@@ -405,4 +495,30 @@ input {
 
 .chat-message:last-of-type {
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+}
+
+.game-event-list {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100vh;
+  scrollbar-width: none;
+}
+
+.game-event-list::-webkit-scrollbar {
+  display: none;
+}
+
+.game-event-list-item {
+  padding: 16px;
+  color: lightgray;
+  font-size: 15px;
+}
+
+.game-event-list-item:nth-child(2n+1) {
+  background-color: rgba(255,255,255,0.1)
+}
+
+.game-event-list-item:last-child {
+  box-shadow: 0px 2px 4px 0 rgba(0,0,0,0.4);
 }

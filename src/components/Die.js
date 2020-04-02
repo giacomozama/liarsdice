@@ -4,7 +4,9 @@ import { faDiceOne,
     faDiceThree, 
     faDiceFour, 
     faDiceFive, 
-    faDiceSix, } from '@fortawesome/free-solid-svg-icons'
+    faDiceSix,
+    faQuestion,
+    faTimes} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Die extends React.Component {
@@ -19,6 +21,10 @@ class Die extends React.Component {
 
     getIconForPips(noOfPips) {
         switch (noOfPips) {
+            case -1:
+                return faTimes
+            case 0:
+                return faQuestion
             case 1:
                 return faDiceOne
             case 2:
@@ -45,7 +51,10 @@ class Die extends React.Component {
     }
 
     render() {
-        return <FontAwesomeIcon className="die" icon={this.state.icon} />
+        return (
+            <div className="die">
+                <FontAwesomeIcon icon={this.state.icon} />
+            </div>)
     }
 }
 
