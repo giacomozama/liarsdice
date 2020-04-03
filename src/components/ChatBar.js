@@ -44,7 +44,7 @@ class ChatBar extends Component {
     render () {
 
         return(
-            <div id="chatBar" className="chat-bar">
+            <div id="chatBar" className="chat-bar hidden">
                 <div className="chat-history">
                     <ul className="chat-message-list">
                         { this.renderChatHistory() }
@@ -77,7 +77,6 @@ class ChatBar extends Component {
         } else {
           bar.classList.add("hidden")
         }
-      
     }
 }
 

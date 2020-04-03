@@ -6,8 +6,7 @@ import Dimmer from './components/Dimmer'
 import PlayerInputPanel from './components/PlayerInputPanel'
 import PlayerList from './components/PlayerList'
 import GameEventList from './components/GameEventList'
-
-let dimmer;
+import MenuScreen from './components/MenuScreen'
 
 export default class LiarsDice extends React.Component {
 
@@ -15,6 +14,10 @@ export default class LiarsDice extends React.Component {
     super(props);
 
     this.playerName = "Jack"
+
+    this.state = {
+      inGame: false
+    }
 
     this.dimmerRef = React.createRef(this.refs.dimmer)
     this.dimmer = <Dimmer ref={this.dimmerRef}/>
@@ -26,29 +29,34 @@ export default class LiarsDice extends React.Component {
 
   render () {
     return (
-      <div className="App">
-        
-        <ChatBar id="chat-bar"/>
-        {this.dimmer}
-        <div className="App-body">
-          <div className="main-content">
-            <div className="left-container">
-              <GameEventList></GameEventList>
-            </div>
-            <div className="center-container">
-              <PlayerTurnPanel playerName="Jack" panelColor="0" />
-              <PlayerTurnPanel playerName="Jack" panelColor="1" />
-              <PlayerTurnPanel playerName="Jack" panelColor="2" />
-              <PlayerTurnPanel playerName="Jack" panelColor="3" />
-              <PlayerTurnPanel playerName="Jack" panelColor="4" />
-              <PlayerTurnPanel playerName="Jack" panelColor="5" />
-            </div>
-            <div className="right-container">
-              <PlayerList></PlayerList>
+      (this.state.inGame) ?
+        <div className="App">
+          <ChatBar id="chat-bar"/>
+          {this.dimmer}
+          <div className="App-body">
+            <div className="main-content">
+              <div className="left-container">
+                <GameEventList></GameEventList>
+              </div>
+              <div className="center-container">
+                <PlayerTurnPanel playerName="Jack" panelColor="0" />
+                <PlayerTurnPanel playerName="Jack" panelColor="1" />
+                <PlayerTurnPanel playerName="Jack" panelColor="2" />
+                <PlayerTurnPanel playerName="Jack" panelColor="3" />
+                <PlayerTurnPanel playerName="Jack" panelColor="4" />
+                <PlayerTurnPanel playerName="Jack" panelColor="5" />
+              </div>
+              <div className="right-container">
+                <PlayerList></PlayerList>
+              </div>
             </div>
           </div>
+        </div> :
+        <div className="App">
+          <div className="App-body">
+            <MenuScreen app={this}></MenuScreen>
+          </div>
         </div>
-      </div>
     )
   }
 }

@@ -7,6 +7,10 @@ button {
   outline: none;
 }
 
+button::-moz-focus-inner {
+  border: 0;
+}
+
 input {
   outline: none;
 }
@@ -130,6 +134,7 @@ input {
 .player-list {
   padding: 16px;
   display: flex;
+  height: 308px;
   background-color: #101010;
   box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
   border-radius: 10px;
@@ -296,16 +301,21 @@ input {
   opacity: 1;
 }
 
-.btn:hover {
+.btn:not(:disabled):hover {
   background-color: #444444;
 }
 
-.btn:active {
+.btn:not(:disabled):active {
   padding: 0 16px;
   padding: 0 16px 0px 16px;
   height: 34px;
   line-height: 0;
   box-shadow: inset 0 0 0 0 rgba(0,0,0,0.6);
+}
+
+.btn:disabled {
+  background-color: #222222;
+  color: #4d4d4d;
 }
 
 .plusminus-btn {
@@ -324,8 +334,8 @@ input {
   background-color: green;
 }
 
-.btn-claim:hover {
-  background-color: rgb(21, 165, 21);
+.btn-claim:not(:disabled):hover {
+  background-color: rgb(21, 165, 21) !important;
 }
 
 .btn-doubt {
@@ -336,14 +346,14 @@ input {
 }
 
 .btn-doubt:hover {
-  background-color: rgb(211, 48, 48);
+  background-color: rgb(211, 48, 48) !important;
 }
 
 .btn-doubt:active {
   margin-top: 14px;
 }
 
-.chat-input input {
+input {
   border-radius: 10px;
   border: none;
   flex: 1 1 auto;
@@ -521,4 +531,145 @@ input {
 
 .game-event-list-item:last-child {
   box-shadow: 0px 2px 4px 0 rgba(0,0,0,0.4);
+}
+
+.logo {
+  width: 700px;
+}
+
+.main-menu-container {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-menu-panel {
+  padding: 32px;
+  display: flex;
+  flex: 0 1 auto;
+  height: 600px;
+  animation-name: menuPanelFadingIn;
+  animation-duration: 500ms;
+  opacity: 1;
+  top: 0;
+  min-width: 400px;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  transition: top 500ms ease-in;
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.1), 0 0 8px 4px rgba(0,0,0,0.4);
+}
+
+.menu-btns-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.menu-btns-container .btn {
+  margin-left: 0;
+  margin-top: 16px;
+  padding: 16px 16px 20px 16px;
+  height: 64px;
+  font-weight: 600;
+  transition: box-shadow 50ms linear, opacity 200ms linear, height 50ms linear, padding 50ms linear, margin-top 50ms linear;
+  text-transform: uppercase;
+}
+
+.menu-btns-container .btn:not(:disabled):active {
+  margin-top: 22px;
+  padding: 16px 16px 14px 16px;
+  height: 58px;
+}
+
+.main-menu-panel.concealed {
+  animation-name: menuPanelFadingOut;
+  animation-duration: 500ms;
+  opacity: 0;
+}
+
+.main-menu-panel input {
+  flex: 0 0 48px;
+  font-size: 22px;
+  margin-top: 36px;
+  justify-self: center;
+}
+
+@keyframes menuPanelFadingOut {
+  0% {
+    opacity: 1;
+    display: flex
+  }
+
+  100% {
+    opacity: 0;
+    display: hidden;
+  }
+}
+
+@keyframes menuPanelFadingIn {
+  0% {
+    opacity: 0;
+  }
+  
+  100% {
+    opacity: 1;
+  }
+}
+
+.about-text {
+  color: lightgray;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  max-width: 400px;
+}
+
+.about-text > span {
+  orphans: 0;
+}
+
+.room-code-panel {
+  height: 300px;
+}
+
+.btn-joinroom {
+  transition: box-shadow 50ms linear, opacity 200ms linear, height 50ms linear, padding 50ms linear, margin-top 50ms linear;
+}
+
+.btn-joinroom:not(:disabled):active {
+  margin-top: 6px;
+}
+
+.room-panel {
+  height: 640px;
+}
+
+.room-code-box {
+  flex: 0 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
+  background-color: #101010;
+}
+
+.room-code-hint {
+  font-size: 14px;
+  color:gray;
+}
+
+.room-code-label {
+  font-size: 32px;
+  margin: 0;
+  color: white;
 }
