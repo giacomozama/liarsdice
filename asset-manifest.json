@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/giacomozama.github.io/liarsdice/static/css/main.1a3e36fb.chunk.css",
-    "main.js": "/giacomozama.github.io/liarsdice/static/js/main.8da8889b.chunk.js",
-    "main.js.map": "/giacomozama.github.io/liarsdice/static/js/main.8da8889b.chunk.js.map",
-    "runtime-main.js": "/giacomozama.github.io/liarsdice/static/js/runtime-main.82ffb7d6.js",
-    "runtime-main.js.map": "/giacomozama.github.io/liarsdice/static/js/runtime-main.82ffb7d6.js.map",
-    "static/js/2.6bee654b.chunk.js": "/giacomozama.github.io/liarsdice/static/js/2.6bee654b.chunk.js",
-    "static/js/2.6bee654b.chunk.js.map": "/giacomozama.github.io/liarsdice/static/js/2.6bee654b.chunk.js.map",
-    "index.html": "/giacomozama.github.io/liarsdice/index.html",
-    "precache-manifest.bbb2d94cfbc7fd1108ae2da5bb7d2851.js": "/giacomozama.github.io/liarsdice/precache-manifest.bbb2d94cfbc7fd1108ae2da5bb7d2851.js",
-    "service-worker.js": "/giacomozama.github.io/liarsdice/service-worker.js",
-    "static/css/main.1a3e36fb.chunk.css.map": "/giacomozama.github.io/liarsdice/static/css/main.1a3e36fb.chunk.css.map",
-    "static/js/2.6bee654b.chunk.js.LICENSE.txt": "/giacomozama.github.io/liarsdice/static/js/2.6bee654b.chunk.js.LICENSE.txt"
+    "main.css": "/liarsdice/static/css/main.1a3e36fb.chunk.css",
+    "main.js": "/liarsdice/static/js/main.b09a0bc2.chunk.js",
+    "main.js.map": "/liarsdice/static/js/main.b09a0bc2.chunk.js.map",
+    "runtime-main.js": "/liarsdice/static/js/runtime-main.17326e2c.js",
+    "runtime-main.js.map": "/liarsdice/static/js/runtime-main.17326e2c.js.map",
+    "static/js/2.6bee654b.chunk.js": "/liarsdice/static/js/2.6bee654b.chunk.js",
+    "static/js/2.6bee654b.chunk.js.map": "/liarsdice/static/js/2.6bee654b.chunk.js.map",
+    "index.html": "/liarsdice/index.html",
+    "precache-manifest.c0a45e76c1320630be0a42de9f2d1f03.js": "/liarsdice/precache-manifest.c0a45e76c1320630be0a42de9f2d1f03.js",
+    "service-worker.js": "/liarsdice/service-worker.js",
+    "static/css/main.1a3e36fb.chunk.css.map": "/liarsdice/static/css/main.1a3e36fb.chunk.css.map",
+    "static/js/2.6bee654b.chunk.js.LICENSE.txt": "/liarsdice/static/js/2.6bee654b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.82ffb7d6.js",
+    "static/js/runtime-main.17326e2c.js",
     "static/js/2.6bee654b.chunk.js",
     "static/css/main.1a3e36fb.chunk.css",
-    "static/js/main.8da8889b.chunk.js"
+    "static/js/main.b09a0bc2.chunk.js"
   ]
 }
