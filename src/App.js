@@ -6,6 +6,7 @@ import Dimmer from './components/Dimmer'
 import PlayerInputPanel from './components/PlayerInputPanel'
 import GameEventList from './components/GameEventList'
 import MenuScreen from './components/MenuScreen'
+import GameController from './components/GameController'
 
 export default class LiarsDice extends React.Component {
 
@@ -23,8 +24,16 @@ export default class LiarsDice extends React.Component {
     this.dimmer = <Dimmer ref={this.dimmerRef}/>
     this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
     this.playerInputPanel = <PlayerInputPanel ref={this.playerInputPanelRef} undimFunction={() => this.dimmerRef.current.undim()}></PlayerInputPanel>
+    
+    this.gameController = new GameController('localhost', '8080', (errorMessage) => console.log(errorMessage) )
+    this.menuScreen = <MenuScreen ref={this.menuScreenRef} gameController={this.gameController} app={this}></MenuScreen>
 
+    this.menuScreenRef = React.createRef(this.menuScreenRef)
     this.audioRef = React.createRef(this.refs.audioRef)
+  }
+
+  componentDidMount() {
+    this.gameController.errorFunction = (errorMessage) => this.menuScreenRef.current.showError(errorMessage)
   }
 
   switchInGame() {
@@ -41,10 +50,13 @@ export default class LiarsDice extends React.Component {
 
 
   render () {
+    const playerTurnPanels = []
+    this.gameController.usernames.forEach((u, i) => playerTurnPanels.push(<PlayerTurnPanel playerName={u} panelColor={i} />))
+
     return (
       (this.state.inGame) ?
         <div className="App">
-          <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.4'} src={'res/perudo.mp3'} autoPlay volume="0.1"/>
+          <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.2'} src={'/liarsdice/res/perudo.mp3'} autoPlay/>
           {this.dimmer}
           <div className="App-body">
             {this.playerInputPanel}
@@ -53,12 +65,7 @@ export default class LiarsDice extends React.Component {
                 <GameEventList></GameEventList>
               </div>
               <div className="center-container">
-                <PlayerTurnPanel playerName="Jack" panelColor="0" />
-                <PlayerTurnPanel playerName="Jack" panelColor="1" />
-                <PlayerTurnPanel playerName="Jack" panelColor="2" />
-                <PlayerTurnPanel playerName="Jack" panelColor="3" />
-                <PlayerTurnPanel playerName="Jack" panelColor="4" />
-                <PlayerTurnPanel playerName="Jack" panelColor="5" />
+                {playerTurnPanels}
               </div>
               <div className="right-container">
                 <ChatBar showInputDialogFunction={() => {this.dimmerRef.current.dim(); this.playerInputPanelRef.current.show()}} id="chat-bar"/>
@@ -68,7 +75,7 @@ export default class LiarsDice extends React.Component {
         </div> :
         <div className="App">
           <div className="App-body">
-            <MenuScreen app={this}></MenuScreen>
+            {this.menuScreen}
           </div>
         </div>
     )

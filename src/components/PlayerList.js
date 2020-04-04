@@ -6,7 +6,7 @@ class PlayerList extends React.Component {
         super(props)
 
         this.state = {
-            playerList: ['Pippo', 'Pluto', 'Paperino', 'Minnie', 'Zio Paperone', 'Hannibal Lecter']
+            playerList: this.props.usernames
         }
     }
 

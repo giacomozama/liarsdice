@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import PlayerList from './PlayerList'
 
 class MenuScreen extends React.Component {
@@ -16,8 +16,12 @@ class MenuScreen extends React.Component {
             canStart: true
         }
 
+        this.gameOwner = false
+        this.playerListRef = React.createRef(this.refs.playerListRef)
+        this.gameController = this.props.gameController
         this.username = ""
         this.roomCode = ""
+        this.errorMessage = ""
     }
 
     switchPanel(panel) {
@@ -32,9 +36,20 @@ class MenuScreen extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.gameController.playerListUpdateFunction = (usernames) => {
+            this.playerListRef.current.setState({playerList: usernames})
+        }
+    }
+
     componentDidUpdate() {
         if (this.state.canPlay && this.username.length < 5) this.setState({canPlay: false})
         if (!this.state.canPlay && this.username.length >= 5) this.setState({canPlay: true})
+    }
+
+    showError(errorMessage) {
+        this.errorMessage = errorMessage
+        this.switchPanel(4)
     }
 
     render () {
@@ -53,7 +68,13 @@ class MenuScreen extends React.Component {
                                 this.username=e.target.value.trim()}}></input>
                         <div className="menu-btns-container">
                             <button className="btn" disabled={!this.state.canPlay} onClick={() => this.switchPanel(1)}>Join a room</button>
-                            <button className="btn" disabled={!this.state.canPlay} onClick={() => this.switchPanel(2)}>Create a room</button>
+                            <button className="btn" disabled={!this.state.canPlay} onClick={() => {
+                                this.gameController.createRoom(this.username, (roomCode) => {
+                                    this.gameOwner = true
+                                    this.roomCode = roomCode
+                                    this.switchPanel(2)
+                                })
+                            }}>Create a room</button>
                             <button className="btn" onClick={() => this.switchPanel(3)}>About</button>
                         </div>
                     </div>)
@@ -69,7 +90,10 @@ class MenuScreen extends React.Component {
                                     this.setState({canJoin: true})
                                     
                                 this.roomCode=e.target.value.trim()}}></input>
-                        <button className="btn-claim btn-joinroom btn" disabled={!this.state.canJoin} onClick={() => this.switchPanel(2)}>JOIN ROOM</button>
+                        <button className="btn-claim btn-joinroom btn" disabled={!this.state.canJoin} onClick={() => {
+                                    this.gameOwner = false
+                                    this.gameController.joinRoom(this.username, this.roomCode, () => this.switchPanel(2))
+                                }}>JOIN ROOM</button>
                     </div>
                 )
                 break;
@@ -79,10 +103,10 @@ class MenuScreen extends React.Component {
                         <button className="btn-doubt btn" onClick={() => this.switchPanel(0)}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>&nbsp;&nbsp;&nbsp;LEAVE ROOM</button>
                         <div className="room-code-box">
                             <span className="room-code-hint">ROOM CODE:</span>
-                            <span className="room-code-label">AbCdE</span>
+                            <span className="room-code-label">{this.roomCode}</span>
                         </div>
-                        <PlayerList></PlayerList>
-                        <button className="btn-claim btn-joinroom btn" onClick={() => this.props.app.switchInGame()} disabled={!this.state.canStart}>START GAME</button>
+                        <PlayerList ref={this.playerListRef} usernames={this.gameController.usernames}></PlayerList>
+                        <button className="btn-claim btn-joinroom btn" disabled={!this.gameOwner} onClick={() => this.props.app.switchInGame()}>START GAME</button>
                     </div>
                 )
                 break;
@@ -94,6 +118,17 @@ class MenuScreen extends React.Component {
                             <span>
                             Made by Giacomo Zama and Alessandro Fusco.<br />Music by Filippo Adessi.<br /><br/><a href="https://github.com/giacomozama/liarsdice">Client GitHub Repo</a><br /><a href="https://github.com/giacomozama/liarsdice-server">Server GitHub Repo</a><br/><br/>Built with ReactJS, NodeJS, Socket.io and&nbsp;FontAwesome.
                             </span>
+                        </div>
+                    </div>
+                )
+                break;
+            case 4:
+                content = (
+                    <div className={`main-menu-panel error-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
+                        <FontAwesomeIcon icon={faExclamationTriangle} className="error-symbol"></FontAwesomeIcon>
+                        <div className="error-text">
+                            {this.errorMessage}<br/><br/>
+                            Please reload the page.
                         </div>
                     </div>
                 )

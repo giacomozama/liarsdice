@@ -641,6 +641,16 @@ input {
   max-width: 400px;
 }
 
+.error-text {
+  color: lightgray;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  max-width: 400px;
+}
+
 .about-text > span {
   orphans: 0;
 }
@@ -687,4 +697,17 @@ input {
 .room-code-label {
   font-size: 32px;
   color: white;
+}
+
+.error-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.error-symbol {
+  font-size: 128px;
+  color: lightgray;
+  flex: 1 1 auto;
 }
