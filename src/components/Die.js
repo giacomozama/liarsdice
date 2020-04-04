@@ -17,7 +17,9 @@ class Die extends React.Component {
             pips: this.props.pips,
             icon: this.getIconForPips(this.props.pips)
         }
+    }
 
+    componentDidMount() {
         this.rollDie(512, 4, 0, 6);
     }
 

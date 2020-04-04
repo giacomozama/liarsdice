@@ -23,6 +23,8 @@ export default class LiarsDice extends React.Component {
     this.dimmer = <Dimmer ref={this.dimmerRef}/>
     this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
     this.playerInputPanel = <PlayerInputPanel ref={this.playerInputPanelRef} undimFunction={() => this.dimmerRef.current.undim()}></PlayerInputPanel>
+
+    this.audioRef = React.createRef(this.refs.audioRef)
   }
 
   switchInGame() {
@@ -42,6 +44,7 @@ export default class LiarsDice extends React.Component {
     return (
       (this.state.inGame) ?
         <div className="App">
+          <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.4'} src={'res/perudo.mp3'} autoPlay volume="0.1"/>
           {this.dimmer}
           <div className="App-body">
             {this.playerInputPanel}

@@ -63,7 +63,7 @@ class MenuScreen extends React.Component {
                     <div className={`main-menu-panel room-code-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
                         <button className="btn-doubt btn" onClick={() => this.switchPanel(0)}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>&nbsp;&nbsp;&nbsp;GO BACK</button>
                         <input type="text" placeholder="Room code" maxLength='6' value={this.roomCode} onChange={(e) => {
-                                if (e.target.value.trim().length !== 5) 
+                                if (e.target.value.trim().length !== 6) 
                                     this.setState({canJoin: false})
                                 else 
                                     this.setState({canJoin: true})
@@ -92,7 +92,7 @@ class MenuScreen extends React.Component {
                         <button className="btn-doubt btn" onClick={() => this.switchPanel(0)}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>&nbsp;&nbsp;&nbsp;GO BACK</button>
                         <div className="about-text">
                             <span>
-                            Made by Giacomo Zama and Alessandro Fusco.<br /><br/><a href="https://github.com/giacomozama/liarsdice">Client GitHub Repo</a><br /><a href="https://github.com/giacomozama/liarsdice-server">Server GitHub Repo</a><br/><br/>Made possible by ReactJS, NodeJS, Socket.io and&nbsp;FontAwesome.
+                            Made by Giacomo Zama and Alessandro Fusco.<br />Music by Filippo Adessi.<br /><br/><a href="https://github.com/giacomozama/liarsdice">Client GitHub Repo</a><br /><a href="https://github.com/giacomozama/liarsdice-server">Server GitHub Repo</a><br/><br/>Built with ReactJS, NodeJS, Socket.io and&nbsp;FontAwesome.
                             </span>
                         </div>
                     </div>
