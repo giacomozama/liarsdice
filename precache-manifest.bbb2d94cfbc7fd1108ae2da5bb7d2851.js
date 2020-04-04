@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6dc2e62af6933a26f96f47f404b122bc",
+    "revision": "63ccef5d747a70916a70423e8d52d75c",
     "url": "/giacomozama.github.io/liarsdice/index.html"
   },
   {
-    "revision": "34eb86f372732b10c01a",
+    "revision": "184a92bcaf4cc49f1017",
     "url": "/giacomozama.github.io/liarsdice/static/css/main.1a3e36fb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/giacomozama.github.io/liarsdice/static/js/2.6bee654b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "34eb86f372732b10c01a",
-    "url": "/giacomozama.github.io/liarsdice/static/js/main.d3e4c0c2.chunk.js"
+    "revision": "184a92bcaf4cc49f1017",
+    "url": "/giacomozama.github.io/liarsdice/static/js/main.8da8889b.chunk.js"
   },
   {
     "revision": "4f3e9da6f6b8839a816a",

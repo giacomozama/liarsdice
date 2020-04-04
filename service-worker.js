@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/giacomozama.github.io/liarsdice/precache-manifest.3ac8904fb749c420f5d4313a82ef0244.js"
+  "/giacomozama.github.io/liarsdice/precache-manifest.bbb2d94cfbc7fd1108ae2da5bb7d2851.js"
 );
 
 self.addEventListener('message', (event) => {
