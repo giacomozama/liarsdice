@@ -11,7 +11,7 @@ class PlayerTurnPanel extends Component {
         this.playerName = props.playerName;
         this.dice = [];
         for (let i = 1; i <= 6; i++)
-          this.dice.push(<Die key={"die" + i} pips={-1} />);
+          this.dice.push(<Die key={"die" + i} pips={0} />);
     }
 
     render () {

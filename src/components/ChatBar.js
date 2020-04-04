@@ -36,15 +36,15 @@ class ChatBar extends Component {
 
     sendChatMessage(evt) {
         if (this.state.chatInputValue.trim() === "") return
+        if (this.state.chatInputValue.trim() === "/claimdialog") this.props.showInputDialogFunction()
 
         this.setState({chatHistory: [...this.state.chatHistory, {name: this.playerName, message: this.state.chatInputValue}],
-        chatInputValue: ''})
+            chatInputValue: ''})
     }
 
     render () {
-
         return(
-            <div id="chatBar" className="chat-bar hidden">
+            <div id="chatBar" className="chat-bar">
                 <div className="chat-history">
                     <ul className="chat-message-list">
                         { this.renderChatHistory() }
@@ -55,7 +55,7 @@ class ChatBar extends Component {
                     <input type="text" value={this.state.chatInputValue} onChange={this.updateChatInputValue}></input>
                     <button className="btn" onClick={this.sendChatMessage}>Send</button>
                 </div>
-                <button onClick={() => this.toggleChatBar()} className="standard-button toggle-chat-button"><FontAwesomeIcon icon={faCommentAlt} /></button>
+                {/* <button onClick={() => this.toggleChatBar()} className="standard-button toggle-chat-button"><FontAwesomeIcon icon={faCommentAlt} /></button> */}
             </div>
         )
         
@@ -70,14 +70,14 @@ class ChatBar extends Component {
         )
       }
 
-    toggleChatBar() {
+/*     toggleChatBar() {
         let bar = document.getElementById("chatBar");
         if (bar.classList.contains("hidden")) {
           bar.classList.remove("hidden")
         } else {
           bar.classList.add("hidden")
         }
-    }
+    } */
 }
 
 export default ChatBar;

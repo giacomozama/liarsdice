@@ -13,6 +13,7 @@ class PlayerInputPanel extends React.Component {
         this.minAmount = 0
 
         this.state = {
+            visible: false,
             lastPlayerName: "SOMEONE",
             lastAmount: 5,
             lastDie: 4,
@@ -59,31 +60,44 @@ class PlayerInputPanel extends React.Component {
         }
     }
 
+    show() {
+        this.setState({
+            visible: true
+        })
+    }
+
+    hide() {
+        this.setState({
+            visible: false
+        })
+    }
+
     render() {
         return (
-        <div className="guess-dialog">
-            <div className="guess-dialog-upper-panel">
-                <div className="previous-statement-panel">
-                    <b>{this.state.lastPlayerName}</b>&nbsp;claims there's&nbsp;<b>{this.state.lastAmount}</b>&nbsp;x&nbsp;<Die pips={this.state.lastDie} />
-                </div>
-                <div className="statement-panel">
-                    <div className="statement-subpanel-amount">
-                        {this.amountPlusButton}
-                        <span>{this.state.currentAmount}</span>
-                        {this.amountMinusButton}
+            this.state.visible ?
+                <div className="guess-dialog">
+                    <div className="guess-dialog-upper-panel">
+                        <div className="previous-statement-panel">
+                            <b>{this.state.lastPlayerName}</b>&nbsp;claims there's&nbsp;<b>{this.state.lastAmount}</b>&nbsp;x&nbsp;<Die pips={this.state.lastDie} />
+                        </div>
+                        <div className="statement-panel">
+                            <div className="statement-subpanel-amount">
+                                {this.amountPlusButton}
+                                <span>{this.state.currentAmount}</span>
+                                {this.amountMinusButton}
+                            </div>
+                            <div className="statement-subpanel-die">
+                                {this.diePlusButton}
+                                <Die ref={this.statementDie} pips={this.state.currentPips} />
+                                {this.dieMinusButton}
+                            </div>
+                        </div>
                     </div>
-                    <div className="statement-subpanel-die">
-                        {this.diePlusButton}
-                        <Die ref={this.statementDie} pips={this.state.currentPips} />
-                        {this.dieMinusButton}
+                    <div className="guess-dialog-lower-panel">
+                        <button className="btn btn-claim" onClick={() => {this.hide(); this.props.undimFunction()}}><b>Claim</b> the above</button>
+                        <button className="btn btn-doubt" onClick={() => {this.hide(); this.props.undimFunction()}}><b>Doubt</b> {this.state.lastPlayerName}'s claim</button>
                     </div>
-                </div>
-            </div>
-            <div className="guess-dialog-lower-panel">
-                <button className="btn btn-claim"><b>Claim</b> the above</button>
-                <button className="btn btn-doubt"><b>Doubt</b> {this.state.lastPlayerName}'s claim</button>
-            </div>
-        </div> )
+                </div> : null)
     }
 }
 

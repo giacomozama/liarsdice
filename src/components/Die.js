@@ -17,6 +17,8 @@ class Die extends React.Component {
             pips: this.props.pips,
             icon: this.getIconForPips(this.props.pips)
         }
+
+        this.rollDie(512, 4, 0, 6);
     }
 
     getIconForPips(noOfPips) {
@@ -39,6 +41,18 @@ class Die extends React.Component {
                 return faDiceSix
             default:
                 return null
+        }
+    }
+
+    rollDie(max, millis, curFrames, maxFrames) {
+        if (millis >= max) 
+            this.setState({
+                icon: this.getIconForPips(this.state.pips)
+            })
+        else {
+            this.setState({ icon: this.getIconForPips(Math.floor(Math.random() * Math.floor(6)) + 1) })
+            const newMillis = (curFrames == maxFrames) ? millis*2: millis
+            setTimeout(() => this.rollDie(max,  newMillis, (curFrames == maxFrames) ? 0 : curFrames + 1, maxFrames), newMillis)
         }
     }
 

@@ -4,7 +4,6 @@ import ChatBar from "./components/ChatBar"
 import PlayerTurnPanel from "./components/PlayerTurnPanel"
 import Dimmer from './components/Dimmer'
 import PlayerInputPanel from './components/PlayerInputPanel'
-import PlayerList from './components/PlayerList'
 import GameEventList from './components/GameEventList'
 import MenuScreen from './components/MenuScreen'
 
@@ -22,10 +21,8 @@ export default class LiarsDice extends React.Component {
 
     this.dimmerRef = React.createRef(this.refs.dimmer)
     this.dimmer = <Dimmer ref={this.dimmerRef}/>
-  }
-
-  componentDidMount() {
-    //this.dimmerRef.current.dim()
+    this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
+    this.playerInputPanel = <PlayerInputPanel ref={this.playerInputPanelRef} undimFunction={() => this.dimmerRef.current.undim()}></PlayerInputPanel>
   }
 
   switchInGame() {
@@ -45,9 +42,9 @@ export default class LiarsDice extends React.Component {
     return (
       (this.state.inGame) ?
         <div className="App">
-          <ChatBar id="chat-bar"/>
           {this.dimmer}
           <div className="App-body">
+            {this.playerInputPanel}
             <div className={`main-content ${this.state.currentPanelFading ? "concealed" : ""}`}>
               <div className="left-container">
                 <GameEventList></GameEventList>
@@ -61,7 +58,7 @@ export default class LiarsDice extends React.Component {
                 <PlayerTurnPanel playerName="Jack" panelColor="5" />
               </div>
               <div className="right-container">
-                <PlayerList></PlayerList>
+                <ChatBar showInputDialogFunction={() => {this.dimmerRef.current.dim(); this.playerInputPanelRef.current.show()}} id="chat-bar"/>
               </div>
             </div>
           </div>
