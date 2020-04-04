@@ -52,6 +52,9 @@ input {
   z-index: 50;
   display:flex;
   min-width: 900px;
+  animation-name: menuPanelFadingIn;
+  animation-duration: 500ms;
+  opacity: 1;
 }
 
 .right-container {
@@ -97,8 +100,7 @@ input {
   flex-direction: column;
   /*border-bottom: 8px solid #600000;*/
   border-radius: 10px;
-  margin: auto;
-  margin-bottom:24px;
+  margin-bottom:20px;
   box-shadow: inset 0px -8px 0px 0 rgba(0,0,0,0.5),
   0 4px 4px 0px rgba(0,0,0,0.4);
 }
@@ -108,27 +110,27 @@ input {
 }
 
 .player-turn-panel[pid='0'] {
-  background-color: #b00000;
+  background-color: #c52424;
 }
 
 .player-turn-panel[pid='1'] {
-  background-color: #00b000;
+  background-color: #7d0a88;
 }
 
 .player-turn-panel[pid='2'] {
-  background-color: #003090;
+  background-color: #08559c;
 }
 
 .player-turn-panel[pid='3'] {
-  background-color: #e0b000;
+  background-color: #0d7e7e;
 }
 
 .player-turn-panel[pid='4'] {
-  background-color: #d00050;
+  background-color: #198a3f;
 }
 
 .player-turn-panel[pid='5'] {
-  background-color: #0d7e7e;
+  background-color: #ac8418;
 }
 
 .player-list {
@@ -160,27 +162,27 @@ input {
 }
 
 .player-list-item[pid='0'] {
-  background-color: #b00000;
+  background-color: #c52424;
 }
 
 .player-list-item[pid='1'] {
-  background-color: #00b000;
+  background-color: #7d0a88;
 }
 
 .player-list-item[pid='2'] {
-  background-color: #003090;
+  background-color: #08559c;
 }
 
 .player-list-item[pid='3'] {
-  background-color: #e0b000;
+  background-color: #0d7e7e;
 }
 
 .player-list-item[pid='4'] {
-  background-color: #d00050;
+  background-color: #198a3f;
 }
 
 .player-list-item[pid='5'] {
-  background-color: #0d7e7e;
+  background-color: #ac8418;
 }
 
 .turn-panel-username {
@@ -534,6 +536,7 @@ input {
 }
 
 .logo {
+  user-select: none;
   width: 700px;
 }
 
@@ -587,7 +590,15 @@ input {
   height: 58px;
 }
 
-.main-menu-panel.concealed {
+.main-menu-container {
+  animation-name: menuPanelFadingIn;
+  animation-duration: 500ms;
+  opacity: 1;
+}
+
+.main-menu-panel.concealed,
+.main-content.concealed,
+.main-menu-container.concealed {
   animation-name: menuPanelFadingOut;
   animation-duration: 500ms;
   opacity: 0;
@@ -640,6 +651,12 @@ input {
   height: 300px;
 }
 
+.room-code-panel input {
+  margin-top: 0px;
+  flex: 0 0 64px;
+  font-size:24px;
+}
+
 .btn-joinroom {
   transition: box-shadow 50ms linear, opacity 200ms linear, height 50ms linear, padding 50ms linear, margin-top 50ms linear;
 }
@@ -664,12 +681,12 @@ input {
 }
 
 .room-code-hint {
+  user-select: none;
   font-size: 14px;
-  color:gray;
+  color: gray;
 }
 
 .room-code-label {
   font-size: 32px;
-  margin: 0;
   color: white;
 }

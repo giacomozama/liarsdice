@@ -43,8 +43,8 @@ class MenuScreen extends React.Component {
             case 0:
                 content = (
                     <div className={`main-menu-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
-                        <img className="logo" src={logo}></img>
-                        <input type="text" placeholder="Insert your username here" value={this.username} onChange={(e) => {
+                        <img className="logo" src={logo} alt="Logo"></img>
+                        <input type="text" placeholder="Insert your username here" maxLength='20' value={this.username} onChange={(e) => {
                                 if (e.target.value.trim().length < 5) 
                                     this.setState({canPlay: false})
                                 else 
@@ -62,8 +62,8 @@ class MenuScreen extends React.Component {
                 content = (
                     <div className={`main-menu-panel room-code-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
                         <button className="btn-doubt btn" onClick={() => this.switchPanel(0)}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>&nbsp;&nbsp;&nbsp;GO BACK</button>
-                        <input type="text" placeholder="Room code" maxLength='5' value={this.roomCode} onChange={(e) => {
-                                if (e.target.value.trim().length != 5) 
+                        <input type="text" placeholder="Room code" maxLength='6' value={this.roomCode} onChange={(e) => {
+                                if (e.target.value.trim().length !== 5) 
                                     this.setState({canJoin: false})
                                 else 
                                     this.setState({canJoin: true})
@@ -82,7 +82,7 @@ class MenuScreen extends React.Component {
                             <span className="room-code-label">AbCdE</span>
                         </div>
                         <PlayerList></PlayerList>
-                        <button className="btn-claim btn-joinroom btn" onClick={() => this.props.app.setState({inGame: true})} disabled={!this.state.canStart}>START GAME</button>
+                        <button className="btn-claim btn-joinroom btn" onClick={() => this.props.app.switchInGame()} disabled={!this.state.canStart}>START GAME</button>
                     </div>
                 )
                 break;
@@ -104,7 +104,7 @@ class MenuScreen extends React.Component {
         }
 
         return (
-            <div className="main-menu-container">
+            <div className={`main-menu-container ${this.props.app.state.currentPanelFading ? "concealed" : ""}`}>
                 {content}
             </div>
         )
