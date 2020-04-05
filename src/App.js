@@ -27,6 +27,7 @@ export default class LiarsDice extends React.Component {
     this.playerInputPanel = <PlayerInputPanel ref={this.playerInputPanelRef} undimFunction={() => this.dimmerRef.current.undim()}></PlayerInputPanel>
     
     this.gameController = new GameController('localhost', '8080', (errorMessage) => console.log(errorMessage) )
+    this.gameController.appRef = this;
     this.menuScreenRef = React.createRef(this.menuScreenRef)
     this.menuScreen = <MenuScreen ref={this.menuScreenRef} gameController={this.gameController} app={this}></MenuScreen>
     this.audioRef = React.createRef(this.refs.audioRef)
@@ -51,7 +52,7 @@ export default class LiarsDice extends React.Component {
 
   render () {
     const playerTurnPanels = []
-    this.gameController.usernames.forEach((u, i) => playerTurnPanels.push(<PlayerTurnPanel playerName={u} panelColor={i} />))
+    this.gameController.usernames.forEach((u, i) => playerTurnPanels.push(<PlayerTurnPanel key={"ptp" + i} playerName={u} panelColor={i} />))
 
     return (
       (this.state.inGame) ?

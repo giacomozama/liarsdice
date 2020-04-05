@@ -27,7 +27,7 @@ class GameInfoControlPanel extends React.Component {
                         <div className='total-dice'>
                             <FontAwesomeIcon icon={faDice}></FontAwesomeIcon><div className='no-of-dice'>{this.state.numberOfDice}</div></div>
                         <div className='game-time'><FontAwesomeIcon icon={faClock}></FontAwesomeIcon>
-                        <div className='game-clock'>{[...date.toISOString().substr(11, 8)].map(c => <span className="clock-char">{c}</span>)}</div>
+                        <div className='game-clock'>{[...date.toISOString().substr(11, 8)].map((c,i) => <span key={'clock-char' + i} className="clock-char">{c}</span>)}</div>
                     </div>
                 </div>
                 <div className='sound-control'>
