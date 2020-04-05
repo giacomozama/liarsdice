@@ -10,6 +10,11 @@ class GameEventList extends React.Component {
         }
     }
 
+    componentDidUpdate() {
+        document.getElementsByClassName('game-event-list')[0].scrollIntoView(false);
+    }
+
+
     render() {
         return (
             <div className='game-event-list'>

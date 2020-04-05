@@ -7,18 +7,16 @@ class PlayerInputPanel extends React.Component {
     constructor(props) {
         super(props)
 
-        //this.maxAmount = this.props.maxAmount
-        //this.minAmount = this.props.minAmount
-        this.maxAmount = 36
-        this.minAmount = 0
-
         this.state = {
             visible: false,
-            lastPlayerName: "SOMEONE",
-            lastAmount: 5,
-            lastDie: 4,
             currentAmount: 1,
             currentPips: 2,
+            maxAmount: 36,
+            minAmount: 0,
+            minWCAmount: 0,
+            previousAmount: 0,
+            previousPips: 0,
+            previousPlayer: ""
         }
 
         this.amountPlusButton = <button onClick={() => this.incAmount()} className="btn plusminus-btn"><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></button>
@@ -28,15 +26,30 @@ class PlayerInputPanel extends React.Component {
         this.statementDie = React.createRef(this.refs.statementDie);
     }
 
+    showInputDialog(previousAmount, previousPips, previousPlayer) {
+        this.props.dimmerRef.current.dim()
+        this.setState({
+            minAmount: previousAmount + 1,
+            currentAmount: previousAmount + 1,
+            minWCAmount: Math.floor(previousAmount / 2) + 1,
+            currentPips: previousPips,
+            previousAmount: previousAmount, 
+            previousPips: previousPips, 
+            previousPlayer: previousPlayer,
+            visible: true
+        })
+    }
+
     incAmount() {
-        if (this.state.currentAmount < this.maxAmount)
+        if (this.state.currentAmount < this.state.maxAmount)
             this.setState({
                 currentAmount: this.state.currentAmount + 1
             })
     }
 
     decAmount() {
-        if (this.state.currentAmount > this.minAmount)
+        if ((this.state.currentPips == 1 && this.state.currentAmount > this.state.minWCAmount) ||
+                (this.state.currentPips != 1 && this.state.currentAmount > this.state.minAmount) )
             this.setState({
                 currentAmount: this.state.currentAmount - 1
             })
@@ -44,32 +57,42 @@ class PlayerInputPanel extends React.Component {
 
     incPips() {
         if (this.state.currentPips < 6) {
-            this.setState({
-                currentPips: this.state.currentPips + 1
-            })
+            if (this.state.currentPips == 1) {
+                this.setState({
+                    currentAmount: this.state.minAmount,
+                    currentPips: this.state.currentPips + 1
+                })
+            } else {
+                this.setState({
+                    currentPips: this.state.currentPips + 1
+                })
+            }
             this.statementDie.current.changePips(this.state.currentPips + 1)
         }
     }
 
     decPips() {
-        if (this.state.currentPips > 1) {
-            this.setState({
-                currentPips: this.state.currentPips - 1
-            })
+        if (this.state.currentPips >= 2) {
+            if (this.state.currentPips == 2) {
+                this.setState({
+                    currentAmount: this.state.minWCAmount,
+                    currentPips: this.state.currentPips - 1
+                })
+            } else {
+                this.setState({
+                    currentPips: this.state.currentPips - 1
+                })
+            }
             this.statementDie.current.changePips(this.state.currentPips - 1)
         }
-    }
-
-    show() {
-        this.setState({
-            visible: true
-        })
+        
     }
 
     hide() {
         this.setState({
             visible: false
         })
+        this.props.dimmerRef.current.undim()
     }
 
     render() {
@@ -78,7 +101,7 @@ class PlayerInputPanel extends React.Component {
                 <div className="guess-dialog">
                     <div className="guess-dialog-upper-panel">
                         <div className="previous-statement-panel">
-                            <b>{this.state.lastPlayerName}</b>&nbsp;claims there's&nbsp;<b>{this.state.lastAmount}</b>&nbsp;x&nbsp;<Die pips={this.state.lastDie} />
+                            <b>{this.state.previousPlayer}</b>&nbsp;claims there's&nbsp;<b>{this.state.previousAmount}</b>&nbsp;x&nbsp;<Die pips={this.state.previousPips} />
                         </div>
                         <div className="statement-panel">
                             <div className="statement-subpanel-amount">
@@ -94,8 +117,8 @@ class PlayerInputPanel extends React.Component {
                         </div>
                     </div>
                     <div className="guess-dialog-lower-panel">
-                        <button className="btn btn-claim" onClick={() => {this.hide(); this.props.undimFunction()}}><b>Claim</b> the above</button>
-                        <button className="btn btn-doubt" onClick={() => {this.hide(); this.props.undimFunction()}}><b>Doubt</b> {this.state.lastPlayerName}'s claim</button>
+                        <button className="btn btn-claim" onClick={() => {this.hide()}}><b>Claim</b> the above</button>
+                        <button className="btn btn-doubt" onClick={() => {this.hide()}}><b>Doubt</b> {this.state.previousPlayer}'s claim</button>
                     </div>
                 </div> : null)
     }

@@ -14,27 +14,21 @@ export default class LiarsDice extends React.Component {
   constructor(props) {
     super(props);
 
-    this.playerName = "Jack"
+    this.playerName = "PLAYER"
 
     this.state = {
       inGame: false,
       currentPanelFading: false,
+      usernames: []
     }
 
-    this.dimmerRef = React.createRef(this.refs.dimmer)
-    this.dimmer = <Dimmer ref={this.dimmerRef}/>
-    this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
-    this.playerInputPanel = <PlayerInputPanel ref={this.playerInputPanelRef} undimFunction={() => this.dimmerRef.current.undim()}></PlayerInputPanel>
-    
-    this.gameController = new GameController('localhost', '8080', (errorMessage) => console.log(errorMessage) )
-    this.gameController.appRef = this;
-    this.menuScreenRef = React.createRef(this.menuScreenRef)
-    this.menuScreen = <MenuScreen ref={this.menuScreenRef} gameController={this.gameController} app={this}></MenuScreen>
-    this.audioRef = React.createRef(this.refs.audioRef)
-  }
+    this.gameController = new GameController('localhost', '8080')
+    this.gameController.app = this;
 
-  componentDidMount() {
-    this.gameController.errorFunction = (errorMessage) => this.menuScreenRef.current.showError(errorMessage)
+    this.dimmerRef = React.createRef(this.refs.dimmer)
+    this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
+    this.menuScreenRef = React.createRef(this.menuScreenRef)
+    this.audioRef = React.createRef(this.refs.audioRef)
   }
 
   switchInGame() {
@@ -49,18 +43,17 @@ export default class LiarsDice extends React.Component {
     }
   }
 
-
   render () {
     const playerTurnPanels = []
-    this.gameController.usernames.forEach((u, i) => playerTurnPanels.push(<PlayerTurnPanel key={"ptp" + i} playerName={u} panelColor={i} />))
+    this.state.usernames.forEach((u, i) => playerTurnPanels.push(<PlayerTurnPanel key={"ptp" + i} playerName={u} panelColor={i} />))
 
     return (
       (this.state.inGame) ?
         <div className="App">
           <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.5'} src={'/liarsdice/res/perudo.mp3'} autoPlay/>
-          {this.dimmer}
+          <Dimmer ref={this.dimmerRef}/>
           <div className="App-body">
-            {this.playerInputPanel}
+            <PlayerInputPanel ref={this.playerInputPanelRef} dimmerRef={this.dimmerRef}></PlayerInputPanel>
             <div className={`main-content ${this.state.currentPanelFading ? "concealed" : ""}`}>
               <div className="left-container">
                 <GameEventList></GameEventList>
@@ -70,14 +63,14 @@ export default class LiarsDice extends React.Component {
                 {playerTurnPanels}
               </div>
               <div className="right-container">
-                <ChatBar showInputDialogFunction={() => {this.dimmerRef.current.dim(); this.playerInputPanelRef.current.show()}} id="chat-bar"/>
+                <ChatBar app={this} gameController={this.gameController} showInputDialogFunction={() => {this.dimmerRef.current.dim(); this.playerInputPanelRef.current.show()}} id="chat-bar"/>
               </div>
             </div>
           </div>
         </div> :
         <div className="App">
           <div className="App-body">
-            {this.menuScreen}
+            <MenuScreen ref={this.menuScreenRef} gameController={this.gameController} app={this}></MenuScreen>
           </div>
         </div>
     )

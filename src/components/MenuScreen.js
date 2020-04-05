@@ -20,8 +20,6 @@ class MenuScreen extends React.Component {
         }
 
         this.playerListRef = React.createRef(this.refs.playerListRef)
-        this.gameController = this.props.gameController
-        this.gameController.menuScreenRef = this;
         this.joinErrorLblRef = React.createRef(this.refs.joinErrorLblRef)
         this.username = ""
         this.roomCode = ""
@@ -39,14 +37,6 @@ class MenuScreen extends React.Component {
                 })
             }, 500)
         }
-    }
-
-    componentDidMount() {
-        this.gameController.playerListUpdateFunction = (usernames) => {
-            if (this.playerListRef.current != null)
-                this.playerListRef.current.setState({playerList: usernames})
-        }
-        this.gameController.setConnectedFunction = (isConnected) => this.setState({'connected': isConnected})
     }
 
     componentDidUpdate() {
@@ -77,7 +67,7 @@ class MenuScreen extends React.Component {
                         <div className="menu-btns-container">
                             <button className="btn" disabled={!this.state.canPlay || !this.state.connected} onClick={() => this.switchPanel(1)}>Join a room</button>
                             <button className="btn" disabled={!this.state.canPlay || !this.state.connected} onClick={() => {
-                                this.gameController.createRoom(this.username, (roomCode) => {
+                                this.props.app.gameController.createRoom(this.username, (roomCode) => {
                                     this.setState({ gameOwner: true })
                                     this.roomCode = roomCode
                                     this.switchPanel(2)
@@ -86,7 +76,7 @@ class MenuScreen extends React.Component {
                             <button className="btn" onClick={() => this.switchPanel(3)}>About</button>
                         </div>
                     </div>)
-                break;
+                break
             case 1:
                 content = (
                     <div className={`main-menu-panel room-code-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
@@ -101,11 +91,11 @@ class MenuScreen extends React.Component {
                                 this.roomCode=e.target.value.trim()}}></input>
                         <button className="btn-claim btn-joinroom btn" disabled={!this.state.canJoin} onClick={() => {
                                     this.setState({ gameOwner: false })
-                                    this.gameController.joinRoom(this.username, this.roomCode, () => this.switchPanel(2))
+                                    this.props.app.gameController.joinRoom(this.username, this.roomCode, () => this.switchPanel(2))
                                 }}>JOIN ROOM</button>
                     </div>
                 )
-                break;
+                break
             case 2:
                 content = (
                     <div className={`main-menu-panel room-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
@@ -114,11 +104,11 @@ class MenuScreen extends React.Component {
                             <span className="room-code-hint">ROOM CODE:</span>
                             <span className="room-code-label">{this.roomCode}</span>
                         </div>
-                        <PlayerList ref={this.playerListRef} usernames={this.gameController.usernames}></PlayerList>
+                        <PlayerList ref={this.playerListRef} usernames={this.props.app.state.usernames}></PlayerList>
                         <button className="btn-claim btn-joinroom btn" disabled={!this.state.gameOwner} onClick={() => this.props.app.switchInGame()}>START GAME</button>
                     </div>
                 )
-                break;
+                break
             case 3:
                 content = (
                     <div className={`main-menu-panel about-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
@@ -130,7 +120,7 @@ class MenuScreen extends React.Component {
                         </div>
                     </div>
                 )
-                break;
+                break
             case 4:
                 content = (
                     <div className={`main-menu-panel error-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
@@ -141,10 +131,10 @@ class MenuScreen extends React.Component {
                         </div>
                     </div>
                 )
-                break;
+                break
             default:
                 content = null
-                break;
+                break
         }
 
         return (

@@ -1,46 +1,48 @@
 import io from 'socket.io-client'
 
-
-
 class GameController {
-    constructor(ip, port, errorFunction) {
+    constructor(ip, port) {
         this.client = io.connect(`http://[${ip}]:${port}`, {
             transports: ['websocket'],
         })
 
         this.usernames = []
-        this.errorFunction = errorFunction
 
-        this.client.on('connect', () => this.setConnectedFunction(true))
-        this.client.on('error', () => {console.log(); this.errorFunction("Connection error.")})
+        this.client.on('connect', () => this.app.menuScreenRef.current.setState({'connected': true}))
+        this.client.on('error', () => this.app.menuScreenRef.current.showError("Connection Error."))
         this.client.on('RoomChange', (res) => {
             if (res.success) {
                 this.usernames = res.room.players
-                this.menuScreenRef.setState({gameOwner: (res.room.players[0] === this.menuScreenRef.username)})
-                this.playerListUpdateFunction(this.usernames)
+                this.app.setState({usernames: this.usernames})
+                this.menuScreenRef.setState({gameOwner: (res.room.owner === this.app.menuScreenRef.current.username)})
+                //this.app.menuScreenRef.current.setState({gameOwner: (res.room.players[0] === this.menuScreenRef.username)})
             }
             console.log(res);
         })
     }
 
     createRoom(username, callback) {
+        this.app.playerName = username
         this.client.emit('CreateRoom', username, (res) => {
             if (res.success) {
                 this.usernames = res.room.players
+                this.app.setState({usernames: this.usernames})
                 callback(res.room.id)
             } else {
-                //TODO
+                this.app.menuScreenRef.current.showError("Connection Error.")
             }
         })
     }
 
     joinRoom(username, roomCode, callback) {
+        this.app.playerName = username
         this.client.emit('JoinRoom', roomCode, username, (res) => {
             if (res.success) {
                 this.usernames = res.room.players
+                this.app.setState({usernames: this.usernames})
                 callback()
             } else {
-                this.menuScreenRef.setState({joinError: "This room does not exist."})
+                this.app.menuScreenRef.current.setState({joinError: "This room does not exist."})
             }
         })
     }

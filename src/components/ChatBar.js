@@ -5,7 +5,7 @@ class ChatBar extends Component {
     constructor(props) {
         super(props);
 
-        this.playerName = "Jack"
+        this.playerName = this.props.app.playerName
 
         this.state = {
             chatInputValue: '',
@@ -32,9 +32,10 @@ class ChatBar extends Component {
         return this.state.chatHistory.map((msg) => this.chatMessage(msg.name, msg.message))
     }
 
-    sendChatMessage(evt) {
+    sendChatMessage() {
         if (this.state.chatInputValue.trim() === "") return
-        if (this.state.chatInputValue.trim() === "/claimdialog") this.props.showInputDialogFunction()
+        if (this.state.chatInputValue.trim() === "/claimdialog")
+            this.props.app.playerInputPanelRef.current.showInputDialog(5, 6, this.playerName)
 
         this.setState({chatHistory: [...this.state.chatHistory, {name: this.playerName, message: this.state.chatInputValue}],
             chatInputValue: ''})
@@ -56,7 +57,6 @@ class ChatBar extends Component {
                 {/* <button onClick={() => this.toggleChatBar()} className="standard-button toggle-chat-button"><FontAwesomeIcon icon={faCommentAlt} /></button> */}
             </div>
         )
-        
     }
 
     chatMessage(name, message) {
@@ -66,16 +66,7 @@ class ChatBar extends Component {
             <span className="chat-message-text">{message}</span>
           </li>
         )
-      }
-
-/*     toggleChatBar() {
-        let bar = document.getElementById("chatBar");
-        if (bar.classList.contains("hidden")) {
-          bar.classList.remove("hidden")
-        } else {
-          bar.classList.add("hidden")
-        }
-    } */
+    }
 }
 
 export default ChatBar;
