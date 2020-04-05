@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "de95fc1dc5bc3576345a48e635c67d62",
+    "revision": "fcf2f149d5e4f96773aa4cd4180c569c",
     "url": "/liarsdice/index.html"
   },
   {
-    "revision": "cd4380a0b00fe1de9683",
+    "revision": "de98da4ad6b127a3c8dc",
     "url": "/liarsdice/static/css/main.7ac5fce9.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/liarsdice/static/js/2.2f7c2004.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "cd4380a0b00fe1de9683",
-    "url": "/liarsdice/static/js/main.206ba0e5.chunk.js"
+    "revision": "de98da4ad6b127a3c8dc",
+    "url": "/liarsdice/static/js/main.0d514755.chunk.js"
   },
   {
     "revision": "7f114b25fff12da42500",
