@@ -13,7 +13,7 @@ class MenuScreen extends React.Component {
             currentPanelFading: false,
             canPlay: false,
             canJoin: false,
-            canStart: true,
+            canStart: false,
             connected: false,
             gameOwner: false,
             joinError: ""
@@ -105,7 +105,7 @@ class MenuScreen extends React.Component {
                             <span className="room-code-label">{this.roomCode}</span>
                         </div>
                         <PlayerList ref={this.playerListRef} usernames={this.props.app.state.usernames}></PlayerList>
-                        <button className="btn-claim btn-joinroom btn" disabled={!this.state.gameOwner} onClick={() => this.props.app.switchInGame()}>START GAME</button>
+                        <button className="btn-claim btn-joinroom btn" disabled={!this.state.gameOwner || !this.state.canStart} onClick={() => this.props.app.switchInGame()}>START GAME</button>
                     </div>
                 )
                 break
