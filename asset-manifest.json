@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/liarsdice/static/css/main.7ac5fce9.chunk.css",
-    "main.js": "/liarsdice/static/js/main.b6728196.chunk.js",
-    "main.js.map": "/liarsdice/static/js/main.b6728196.chunk.js.map",
+    "main.js": "/liarsdice/static/js/main.a527bd6f.chunk.js",
+    "main.js.map": "/liarsdice/static/js/main.a527bd6f.chunk.js.map",
     "runtime-main.js": "/liarsdice/static/js/runtime-main.17326e2c.js",
     "runtime-main.js.map": "/liarsdice/static/js/runtime-main.17326e2c.js.map",
     "static/js/2.2f7c2004.chunk.js": "/liarsdice/static/js/2.2f7c2004.chunk.js",
     "static/js/2.2f7c2004.chunk.js.map": "/liarsdice/static/js/2.2f7c2004.chunk.js.map",
     "index.html": "/liarsdice/index.html",
-    "precache-manifest.6167470931e27070eed34e16b4bf7d59.js": "/liarsdice/precache-manifest.6167470931e27070eed34e16b4bf7d59.js",
+    "precache-manifest.a85c2a97cd151fb8b22229cbb15b1abe.js": "/liarsdice/precache-manifest.a85c2a97cd151fb8b22229cbb15b1abe.js",
     "service-worker.js": "/liarsdice/service-worker.js",
     "static/css/main.7ac5fce9.chunk.css.map": "/liarsdice/static/css/main.7ac5fce9.chunk.css.map",
     "static/js/2.2f7c2004.chunk.js.LICENSE.txt": "/liarsdice/static/js/2.2f7c2004.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.17326e2c.js",
     "static/js/2.2f7c2004.chunk.js",
     "static/css/main.7ac5fce9.chunk.css",
-    "static/js/main.b6728196.chunk.js"
+    "static/js/main.a527bd6f.chunk.js"
   ]
 }
