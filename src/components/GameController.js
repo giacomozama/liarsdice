@@ -49,6 +49,10 @@ class GameController {
         })
     }
 
+    leaveRoom() {
+        this.client.emit('LeaveRoom', () => {})
+    }
+
 }
 
 export default GameController

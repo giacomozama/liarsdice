@@ -99,7 +99,7 @@ class MenuScreen extends React.Component {
             case 2:
                 content = (
                     <div className={`main-menu-panel room-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
-                        <button className="btn-doubt btn" onClick={() => this.switchPanel(0)}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>&nbsp;&nbsp;&nbsp;LEAVE ROOM</button>
+                        <button className="btn-doubt btn" onClick={() => { this.props.app.gameController.leaveRoom(); this.switchPanel(0) }}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>&nbsp;&nbsp;&nbsp;LEAVE ROOM</button>
                         <div className="room-code-box">
                             <span className="room-code-hint">ROOM CODE:</span>
                             <span className="room-code-label">{this.roomCode}</span>
