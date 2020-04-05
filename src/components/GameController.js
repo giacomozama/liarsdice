@@ -9,7 +9,7 @@ class GameController {
         this.usernames = []
         this.errorFunction = errorFunction
 
-        this.client.on('connect', () => console.log('Connection succesful!'))
+        this.client.on('connect', () => this.setConnectedFunction(true))
         this.client.on('error', () => {console.log(); this.errorFunction("Connection error.")})
         this.client.on('JoinRoom', (usernames) => {this.usernames = usernames; this.playerListUpdateFunction(usernames) })
     }

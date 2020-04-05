@@ -13,7 +13,8 @@ class MenuScreen extends React.Component {
             currentPanelFading: false,
             canPlay: false,
             canJoin: false,
-            canStart: true
+            canStart: true,
+            connected: false
         }
 
         this.gameOwner = false
@@ -40,6 +41,7 @@ class MenuScreen extends React.Component {
         this.gameController.playerListUpdateFunction = (usernames) => {
             this.playerListRef.current.setState({playerList: usernames})
         }
+        this.gameController.setConnectedFunction = (isConnected) => this.setState({'connected': isConnected})
     }
 
     componentDidUpdate() {
@@ -59,6 +61,7 @@ class MenuScreen extends React.Component {
                 content = (
                     <div className={`main-menu-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
                         <img className="logo" src={logo} alt="Logo"></img>
+                        <div className={`server-status ${this.state.connected ? 'connected' : 'disconnected'}`}>{this.state.connected ? 'CONNECTED TO SERVER' : 'DISCONNECTED'}</div>
                         <input type="text" placeholder="Insert your username here" maxLength='20' value={this.username} onChange={(e) => {
                                 if (e.target.value.trim().length < 5) 
                                     this.setState({canPlay: false})
@@ -67,8 +70,8 @@ class MenuScreen extends React.Component {
                                     
                                 this.username=e.target.value.trim()}}></input>
                         <div className="menu-btns-container">
-                            <button className="btn" disabled={!this.state.canPlay} onClick={() => this.switchPanel(1)}>Join a room</button>
-                            <button className="btn" disabled={!this.state.canPlay} onClick={() => {
+                            <button className="btn" disabled={!this.state.canPlay || !this.state.connected} onClick={() => this.switchPanel(1)}>Join a room</button>
+                            <button className="btn" disabled={!this.state.canPlay || !this.state.connected} onClick={() => {
                                 this.gameController.createRoom(this.username, (roomCode) => {
                                     this.gameOwner = true
                                     this.roomCode = roomCode

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCommentAlt } from '@fortawesome/free-solid-svg-icons';
 import '../App.css';
 
 class ChatBar extends Component {
@@ -52,7 +50,7 @@ class ChatBar extends Component {
                 </div>
                 
                 <div ref="chatMessageInput" className="chat-input">
-                    <input type="text" value={this.state.chatInputValue} onChange={this.updateChatInputValue}></input>
+                    <input type="text" onKeyDown={(e) => {if (e.keyCode === 13) {this.sendChatMessage()}}} value={this.state.chatInputValue} onChange={this.updateChatInputValue}></input>
                     <button className="btn" onClick={this.sendChatMessage}>Send</button>
                 </div>
                 {/* <button onClick={() => this.toggleChatBar()} className="standard-button toggle-chat-button"><FontAwesomeIcon icon={faCommentAlt} /></button> */}

@@ -7,6 +7,7 @@ import PlayerInputPanel from './components/PlayerInputPanel'
 import GameEventList from './components/GameEventList'
 import MenuScreen from './components/MenuScreen'
 import GameController from './components/GameController'
+import GameInfoControlPanel from './components/GameInfoControlPanel'
 
 export default class LiarsDice extends React.Component {
 
@@ -26,9 +27,8 @@ export default class LiarsDice extends React.Component {
     this.playerInputPanel = <PlayerInputPanel ref={this.playerInputPanelRef} undimFunction={() => this.dimmerRef.current.undim()}></PlayerInputPanel>
     
     this.gameController = new GameController('localhost', '8080', (errorMessage) => console.log(errorMessage) )
-    this.menuScreen = <MenuScreen ref={this.menuScreenRef} gameController={this.gameController} app={this}></MenuScreen>
-
     this.menuScreenRef = React.createRef(this.menuScreenRef)
+    this.menuScreen = <MenuScreen ref={this.menuScreenRef} gameController={this.gameController} app={this}></MenuScreen>
     this.audioRef = React.createRef(this.refs.audioRef)
   }
 
@@ -56,13 +56,14 @@ export default class LiarsDice extends React.Component {
     return (
       (this.state.inGame) ?
         <div className="App">
-          <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.2'} src={'/liarsdice/res/perudo.mp3'} autoPlay/>
+          <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.5'} src={'/liarsdice/res/perudo.mp3'} autoPlay/>
           {this.dimmer}
           <div className="App-body">
             {this.playerInputPanel}
             <div className={`main-content ${this.state.currentPanelFading ? "concealed" : ""}`}>
               <div className="left-container">
                 <GameEventList></GameEventList>
+                <GameInfoControlPanel audioRef={this.audioRef}></GameInfoControlPanel>
               </div>
               <div className="center-container">
                 {playerTurnPanels}
