@@ -14,7 +14,7 @@ class GameController {
             if (res.success) {
                 this.usernames = res.room.players
                 this.app.setState({usernames: this.usernames})
-                this.menuScreenRef.setState({gameOwner: (res.room.owner === this.app.menuScreenRef.current.username)})
+                this.app.menuScreenRef.current.setState({gameOwner: (res.room.owner === this.app.menuScreenRef.current.username)})
                 //this.app.menuScreenRef.current.setState({gameOwner: (res.room.players[0] === this.menuScreenRef.username)})
             }
             console.log(res);
