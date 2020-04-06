@@ -19,16 +19,28 @@ export default class LiarsDice extends React.Component {
     this.state = {
       inGame: false,
       currentPanelFading: false,
-      usernames: []
+      usernames: [],
+      urlRoomCode: ""
     }
-
-    this.gameController = new GameController('localhost', '8080')
-    this.gameController.app = this;
 
     this.dimmerRef = React.createRef(this.refs.dimmer)
     this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
     this.menuScreenRef = React.createRef(this.menuScreenRef)
     this.audioRef = React.createRef(this.refs.audioRef)
+
+    this.gameController = new GameController('localhost', '8080')
+    this.gameController.app = this;
+  }
+
+  componentDidMount() {
+    const urlR = this.getUrlVars()["r"]
+    this.setState({urlRoomCode: (urlR !== undefined) ? urlR : "" })
+  }
+
+  getUrlVars() {
+    const vars = {}
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m,key,value) => vars[key] = value)
+    return vars
   }
 
   switchInGame() {

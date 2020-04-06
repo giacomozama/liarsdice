@@ -70,7 +70,7 @@ input {
   background-color: #101010;
   box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
   box-sizing: border-box;
-  padding: 0 16px 0 16px;
+  padding: 16px 16px 0 16px;
   z-index: 51;
   min-width: 400px;
   overflow: auto;
@@ -111,10 +111,6 @@ input {
   margin-bottom:20px;
   box-shadow: inset 0px -8px 0px 0 rgba(0,0,0,0.5),
   0 4px 4px 0px rgba(0,0,0,0.4);
-}
-
-.player-turn-panel:first-of-type {
-  margin-top: 2vh;
 }
 
 .player-turn-panel[pid='0'] {
@@ -282,12 +278,14 @@ input {
 }
 
 .btn {
+  cursor: pointer;
   background-color: #222222;
   margin-left:16px;
   font-size: 18px;
   border: none;
   padding: 0px 16px 6px 16px;
   flex: 0 0 auto;
+  border-top: 0px solid transparent;
   height: 40px;
   text-transform: uppercase;
   color: whitesmoke;
@@ -668,6 +666,18 @@ input {
   orphans: 0;
 }
 
+.about-text a {
+  color: gray;
+  text-decoration: none;
+}
+
+.about-text a:visited {
+  color: gray;
+}
+
+.about-text a:hover {
+  color: darkgray;
+}
 
 .room-code-panel input {
   margin-top: 24px;
@@ -833,4 +843,68 @@ input {
 
 .join-error.hidden {
   display: none;
+}
+
+.url-room-code {
+  text-transform: none;
+  color: gray;
+}
+
+.room-code-link-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.room-code-btns {
+  display: flex;
+  color: gray;
+}
+
+.room-code-copy-code,
+.room-code-copy-link {
+  position: relative;
+}
+
+.room-code-copy-code {
+  margin-right: 16px;
+}
+
+.room-code-copy-code:hover,
+.room-code-copy-link:hover {
+  color: lightgray;
+}
+
+.room-code-copy-code:hover::after,
+.room-code-copy-link:hover::after {
+  content: 'Copy room code';
+  position: absolute;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  top:32px;
+  left:24px;
+  font-size: 14px;
+  z-index:100;
+  opacity: 0.75;
+  background-color: #303030;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);
+  padding: 8px;
+  animation-name: tooltipFadeIn;
+  animation-duration: 200ms;
+  border-radius:10px;
+}
+
+.room-code-copy-link:hover::after {
+  content: 'Copy room link'
+}
+
+@keyframes tooltipFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.75;
+  }
 }

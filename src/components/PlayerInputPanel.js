@@ -48,8 +48,8 @@ class PlayerInputPanel extends React.Component {
     }
 
     decAmount() {
-        if ((this.state.currentPips == 1 && this.state.currentAmount > this.state.minWCAmount) ||
-                (this.state.currentPips != 1 && this.state.currentAmount > this.state.minAmount) )
+        if ((this.state.currentPips === 1 && this.state.currentAmount > this.state.minWCAmount) ||
+                (this.state.currentPips !== 1 && this.state.currentAmount > this.state.minAmount) )
             this.setState({
                 currentAmount: this.state.currentAmount - 1
             })
@@ -57,7 +57,7 @@ class PlayerInputPanel extends React.Component {
 
     incPips() {
         if (this.state.currentPips < 6) {
-            if (this.state.currentPips == 1) {
+            if (this.state.currentPips === 1) {
                 this.setState({
                     currentAmount: this.state.minAmount,
                     currentPips: this.state.currentPips + 1
@@ -73,7 +73,7 @@ class PlayerInputPanel extends React.Component {
 
     decPips() {
         if (this.state.currentPips >= 2) {
-            if (this.state.currentPips == 2) {
+            if (this.state.currentPips === 2) {
                 this.setState({
                     currentAmount: this.state.minWCAmount,
                     currentPips: this.state.currentPips - 1
