@@ -166,6 +166,3 @@ class MenuScreen extends React.Component {
 }
 
 export default MenuScreen
-
-//dice = [[1,5,3,2,5,6],[1,5,3,4,5,6],[4,5,1,2,5,4]]
-const testDoubt = (amount, pips, dice) => (dice.reduce((acc, d) => acc + d.filter(dd => dd === pips).length, 0) >= amount)
