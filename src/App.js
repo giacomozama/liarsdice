@@ -28,7 +28,7 @@ export default class LiarsDice extends React.Component {
     this.menuScreenRef = React.createRef(this.menuScreenRef)
     this.audioRef = React.createRef(this.refs.audioRef)
 
-    this.gameController = new GameController('localhost', '8080')
+    this.gameController = new GameController(process.env.REACT_APP_BACKEND || 'http://localhost:8080')
     this.gameController.app = this;
   }
 

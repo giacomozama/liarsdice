@@ -1,8 +1,9 @@
 import io from 'socket.io-client'
 
 class GameController {
-    constructor(ip, port) {
-        this.client = io.connect(`http://[${ip}]:${port}`, {
+    constructor(server_host) {
+
+        this.client = io.connect(server_host, {
             transports: ['websocket'],
         })
 
