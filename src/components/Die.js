@@ -14,7 +14,6 @@ class Die extends React.Component {
         super(props)
 
         this.state = {
-            pips: this.props.pips,
             icon: this.getIconForPips(this.props.pips)
         }
     }
@@ -42,29 +41,20 @@ class Die extends React.Component {
         }
     }
 
-    rollDieToValue(newPips) {
-        this.setState({ pips: newPips })
+    rollDieWithStandardParams() {
         this.rollDie(512, 16, 0, 6);
     }
 
     rollDie(max, millis, curFrames, maxFrames) {
         if (millis >= max) 
             this.setState({
-                icon: this.getIconForPips(this.state.pips)
+                icon: this.getIconForPips(this.props.pips)
             })
         else {
             this.setState({ icon: this.getIconForPips(Math.floor(Math.random() * Math.floor(6)) + 1) })
             const newMillis = (curFrames === maxFrames) ? millis*2: millis
             setTimeout(() => this.rollDie(max,  newMillis, (curFrames === maxFrames) ? 0 : curFrames + 1, maxFrames), newMillis)
         }
-    }
-
-    changePips(noOfPips) {
-        if (noOfPips >= 1 && noOfPips <= 6)
-            this.setState({
-                pips: noOfPips,
-                icon: this.getIconForPips(noOfPips)
-            })
     }
 
     render() {

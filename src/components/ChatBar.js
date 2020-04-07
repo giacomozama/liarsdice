@@ -14,7 +14,6 @@ class ChatBar extends Component {
 
         this.updateChatInputValue = this.updateChatInputValue.bind(this);
         this.sendChatMessage = this.sendChatMessage.bind(this);
-        this.renderChatHistory = this.renderChatHistory.bind(this);
         this.chatMessage = this.chatMessage.bind(this);
     }
 
@@ -28,17 +27,15 @@ class ChatBar extends Component {
         });
     }
 
-    renderChatHistory() {
-        return this.state.chatHistory.map((msg) => this.chatMessage(msg.name, msg.message))
-    }
-
     sendChatMessage() {
         if (this.state.chatInputValue.trim() === "") return
         if (this.state.chatInputValue.trim() === "/claimdialog")
             this.props.app.playerInputPanelRef.current.showInputDialog(5, 6, this.playerName)
 
-        this.setState({chatHistory: [...this.state.chatHistory, {name: this.playerName, message: this.state.chatInputValue}],
-            chatInputValue: ''})
+        /* this.setState({chatHistory: [...this.state.chatHistory, {name: this.playerName, message: this.state.chatInputValue}],
+            chatInputValue: ''}) */
+
+        this.props.app.gameController.sendChatMessage(this.state.chatInputValue)
     }
 
     render () {
@@ -46,7 +43,7 @@ class ChatBar extends Component {
             <div id="chatBar" className="chat-bar">
                 <div className="chat-history">
                     <ul className="chat-message-list">
-                        { this.renderChatHistory() }
+                        {this.state.chatHistory.map((msg, i) => this.chatMessage(msg.name, msg.message, i))}
                     </ul>
                 </div>
                 
@@ -59,9 +56,9 @@ class ChatBar extends Component {
         )
     }
 
-    chatMessage(name, message) {
+    chatMessage(name, message, i) {
         return (
-          <li className="chat-message">
+          <li key={`cm${i}`} className="chat-message">
             <span className="chat-message-name">{name}: </span>
             <span className="chat-message-text">{message}</span>
           </li>

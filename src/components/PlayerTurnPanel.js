@@ -7,23 +7,32 @@ class PlayerTurnPanel extends Component {
     constructor(props) {
         super(props);
 
-        this.panelColor = props.panelColor;
         this.playerName = props.playerName;
-        this.dice = [];
-        for (let i = 1; i <= 6; i++)
-          this.dice.push(<Die key={"die" + i} pips={0} />);
+
+    }
+
+    changeDice(newDice) {
+      const t = []
+      for (let i = 0; i < newDice.length; i++)
+        t.push(newDice[i])
+      for (let i = 0; i < newDice.length - t.length; i++)
+        t.push(-1)
+
+      this.setState({
+        dice: t
+      })
     }
 
     render () {
         return (
             <div 
               className="player-turn-panel"
-              pid={this.panelColor}>
+              pid={this.props.pId}>
                 <div className="turn-panel-username">
                   <span>{this.playerName}</span>
                 </div>
                 <div className="turn-panel-inner">
-                  {this.dice}
+                  {this.props.app.state.dice[this.props.pId].map((d, i) => <Die key={`die${this.props.pId}${i}`} pips={d[i]} />)}
                 </div>
             </div>
           );
