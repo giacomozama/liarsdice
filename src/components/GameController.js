@@ -16,9 +16,6 @@ class GameController {
         this.client.on('GameStarted', (res) => {
             console.log(res)
             if (res.success) {
-                this.myGid = res.gid
-                this.localPlayerDice = res.dice
-                this.activePlayer = res.active_player
                 this.app.state.players.find(p => p.gid === res.gid).dice = res.dice
 
                 this.app.setState({
@@ -27,6 +24,9 @@ class GameController {
                     myGid: res.gid,
                     activePlayerGid: res.active_player
                 } )
+
+                if (this.app.localPlayerPanelRef.current !== null)
+                    this.app.localPlayerPanelRef.current.rollAllDice(res.dice)
             }
         })
         this.client.on('RoomChange', (res) => {

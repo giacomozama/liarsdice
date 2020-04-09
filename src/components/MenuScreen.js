@@ -58,7 +58,7 @@ class MenuScreen extends React.Component {
                     <div className={`main-menu-panel ${this.state.currentPanelFading ? "concealed" : ""}`}>
                         <img className="logo" src={logo} alt="Logo"></img>
                         <div className={`server-status ${this.state.connected ? 'connected' : 'disconnected'}`}>{this.state.connected ? 'CONNECTED TO SERVER' : 'DISCONNECTED'}</div>
-                        <input type="text" placeholder="Insert your username here" maxLength='20' value={this.username} onChange={(e) => {
+                        <input type="text" placeholder="Insert your username here" maxLength='10' value={this.username} onChange={(e) => {
                                 if (e.target.value.trim().length < 5) 
                                     this.setState({canPlay: false})
                                 else 

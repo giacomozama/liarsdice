@@ -28,6 +28,7 @@ export default class LiarsDice extends React.Component {
     this.menuScreenRef = React.createRef(this.menuScreenRef)
     this.audioRef = React.createRef(this.refs.audioRef)
     this.chatBarRef = React.createRef(this.refs.chatBarRef)
+    this.localPlayerPanelRef = React.createRef(this.refs.localPlayerPanelRef)
 
     this.gameController = new GameController(process.env.REACT_APP_BACKEND || 'http://localhost:8080')
     this.gameController.app = this;
@@ -67,10 +68,19 @@ export default class LiarsDice extends React.Component {
             <div className={`main-content ${this.state.currentPanelFading ? "concealed" : ""}`}>
               <div className="left-container">
                 <GameEventList></GameEventList>
-                <GameInfoControlPanel audioRef={this.audioRef}></GameInfoControlPanel>
+                <GameInfoControlPanel app={this} audioRef={this.audioRef}></GameInfoControlPanel>
               </div>
               <div className="center-container">
-                {this.state.players.map((p, i) => <PlayerTurnPanel activePlayer={p.gid === this.state.activePlayerGid} app={this} key={"ptp" + i} player={p} />)}
+                {this.state.players.map((p, i) => {
+                  const isLocalPlayer = p.gid === this.state.myGid
+                  return (
+                    <PlayerTurnPanel 
+                      ref={(isLocalPlayer) ? this.localPlayerPanelRef : null}
+                      isLocalPlayer={isLocalPlayer}
+                      isActivePlayer={p.gid === this.state.activePlayerGid}
+                      app={this}
+                      key={"ptp" + i}
+                      player={p} />)})}
               </div>
               <div className="right-container">
                 <ChatBar app={this} ref={this.chatBarRef} gameController={this.gameController} showInputDialogFunction={() => {this.dimmerRef.current.dim(); this.playerInputPanelRef.current.show()}} id="chat-bar"/>

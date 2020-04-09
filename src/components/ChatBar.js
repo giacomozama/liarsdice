@@ -29,6 +29,10 @@ class ChatBar extends Component {
         if (this.state.chatInputValue.trim() === "") return
         if (this.state.chatInputValue.trim() === "/claimdialog")
             this.props.app.playerInputPanelRef.current.showInputDialog(5, 6, "TEST PLAYER")
+        if (this.state.chatInputValue.trim() === "/roll")
+            this.props.app.localPlayerPanelRef.current.rollAllDice(
+                this.props.app.state.players.find(p => p.gid == this.props.app.state.myGid).dice
+            )
 
         this.setState({ chatInputValue: "" })
 
@@ -45,7 +49,7 @@ class ChatBar extends Component {
                 </div>
                 
                 <div ref="chatMessageInput" className="chat-input">
-                    <input type="text" onKeyDown={(e) => {if (e.keyCode === 13) {this.sendChatMessage()}}} value={this.state.chatInputValue} onChange={this.updateChatInputValue}></input>
+                    <input type="text" onKeyDown={(e) => {if (e.keyCode === 13) {this.sendChatMessage()}}} value={this.state.chatInputValue} maxLength={100} onChange={this.updateChatInputValue}></input>
                     <button className="btn" onClick={this.sendChatMessage}>Send</button>
                 </div>
                 {/* <button onClick={() => this.toggleChatBar()} className="standard-button toggle-chat-button"><FontAwesomeIcon icon={faCommentAlt} /></button> */}

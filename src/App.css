@@ -425,11 +425,13 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex: 0 0 150px;
 }
 
 .statement-panel > div > span {
-  flex: 0 0 68px;
-  text-align: center;
+  flex: 0 0 70px;
+  display: inline-flex;
+  justify-content: center;
   font-family: Montserrat;
   color: white;
   user-select: none;
