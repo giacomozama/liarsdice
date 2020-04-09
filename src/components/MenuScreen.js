@@ -124,7 +124,7 @@ class MenuScreen extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <PlayerList ref={this.playerListRef} usernames={this.props.app.state.players}></PlayerList>
+                        <PlayerList ref={this.playerListRef} players={this.props.app.state.players}></PlayerList>
                         <button className="btn-claim btn-joinroom btn" disabled={!this.state.gameOwner || !this.state.canStart} onClick={() => this.props.app.gameController.startGame()}>START GAME</button>
                     </div>
                 )

@@ -14,16 +14,14 @@ export default class LiarsDice extends React.Component {
   constructor(props) {
     super(props);
 
-    this.playerName = "PLAYER"
-
     this.state = {
       inGame: false,
       currentPanelFading: false,
-      players: {},
-      urlRoomCode: "",
-      dice: [[0, 0, 0, 0, 0, 0]]
+      players: [],
+      myGid: -1,
+      activePlayerGid: -1,
+      urlRoomCode: ""
     }
-
 
     this.dimmerRef = React.createRef(this.refs.dimmer)
     this.playerInputPanelRef = React.createRef(this.refs.playerInputPanel)
@@ -59,10 +57,6 @@ export default class LiarsDice extends React.Component {
   }
 
   render () {
-    const playerTurnPanels = []
-    for (let i = 0; i < Object.keys(this.state.players).length; i++) {
-      playerTurnPanels.push(<PlayerTurnPanel app={this} key={"ptp" + i} pId={i} playerName={this.state.players[i]} />)
-    }
     return (
       (this.state.inGame) ?
         <div className="App">
@@ -76,7 +70,7 @@ export default class LiarsDice extends React.Component {
                 <GameInfoControlPanel audioRef={this.audioRef}></GameInfoControlPanel>
               </div>
               <div className="center-container">
-                {playerTurnPanels}
+                {this.state.players.map((p, i) => <PlayerTurnPanel activePlayer={p.gid === this.state.activePlayerGid} app={this} key={"ptp" + i} player={p} />)}
               </div>
               <div className="right-container">
                 <ChatBar app={this} ref={this.chatBarRef} gameController={this.gameController} showInputDialogFunction={() => {this.dimmerRef.current.dim(); this.playerInputPanelRef.current.show()}} id="chat-bar"/>

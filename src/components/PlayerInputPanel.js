@@ -23,7 +23,7 @@ class PlayerInputPanel extends React.Component {
         this.amountMinusButton = <button onClick={() => this.decAmount()} className="btn plusminus-btn"><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon></button>
         this.diePlusButton = <button onClick={() => this.incPips()} className="btn plusminus-btn"><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></button>
         this.dieMinusButton = <button onClick={() => this.decPips()} className="btn plusminus-btn"><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon></button>
-        this.statementDie = React.createRef(this.refs.statementDie);
+        this.statementDieRef = React.createRef(this.refs.statementDieRef);
     }
 
     showInputDialog(previousAmount, previousPips, previousPlayer) {
@@ -67,12 +67,12 @@ class PlayerInputPanel extends React.Component {
                     currentPips: this.state.currentPips + 1
                 })
             }
-            this.statementDie.current.changePips(this.state.currentPips + 1)
+            this.statementDieRef.current.updateDieWithoutRolling(this.state.currentPips + 1)
         }
     }
 
     decPips() {
-        if (this.state.currentPips >= 2) {
+        if (this.state.currentPips > 1) {
             if (this.state.currentPips === 2) {
                 this.setState({
                     currentAmount: this.state.minWCAmount,
@@ -83,7 +83,7 @@ class PlayerInputPanel extends React.Component {
                     currentPips: this.state.currentPips - 1
                 })
             }
-            this.statementDie.current.changePips(this.state.currentPips - 1)
+            this.statementDieRef.current.updateDieWithoutRolling(this.state.currentPips - 1)
         }
         
     }
@@ -111,7 +111,7 @@ class PlayerInputPanel extends React.Component {
                             </div>
                             <div className="statement-subpanel-die">
                                 {this.diePlusButton}
-                                <Die ref={this.statementDie} pips={this.state.currentPips} />
+                                <Die ref={this.statementDieRef} pips={this.state.currentPips} />
                                 {this.dieMinusButton}
                             </div>
                         </div>

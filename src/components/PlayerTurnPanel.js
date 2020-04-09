@@ -3,36 +3,16 @@ import Die from './Die.js'
 import '../App.css';
 
 class PlayerTurnPanel extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.playerName = props.playerName;
-
-    }
-
-    changeDice(newDice) {
-      const t = []
-      for (let i = 0; i < newDice.length; i++)
-        t.push(newDice[i])
-      for (let i = 0; i < newDice.length - t.length; i++)
-        t.push(-1)
-
-      this.setState({
-        dice: t
-      })
-    }
-
     render () {
         return (
             <div 
-              className="player-turn-panel"
-              pid={this.props.pId}>
+              className={`player-turn-panel ${(this.props.activePlayer) ? "active-player" : ""}`}
+              pid={this.props.player.gid}>
                 <div className="turn-panel-username">
-                  <span>{this.playerName}</span>
+                  <span>{this.props.player.username}</span>
                 </div>
                 <div className="turn-panel-inner">
-                  {this.props.app.state.dice[this.props.pId].map((d, i) => <Die key={`die${this.props.pId}${i}`} pips={d[i]} />)}
+                  {this.props.player.dice.map((d, i) => <Die key={`gid${this.props.player.gid}die${i}`} pips={d} />)}
                 </div>
             </div>
           );

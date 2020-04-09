@@ -5,8 +5,6 @@ class ChatBar extends Component {
     constructor(props) {
         super(props);
 
-        this.playerName = this.props.app.playerName
-
         this.state = {
             chatInputValue: '',
             chatHistory: []
@@ -30,10 +28,9 @@ class ChatBar extends Component {
     sendChatMessage() {
         if (this.state.chatInputValue.trim() === "") return
         if (this.state.chatInputValue.trim() === "/claimdialog")
-            this.props.app.playerInputPanelRef.current.showInputDialog(5, 6, this.playerName)
+            this.props.app.playerInputPanelRef.current.showInputDialog(5, 6, "TEST PLAYER")
 
-        /* this.setState({chatHistory: [...this.state.chatHistory, {name: this.playerName, message: this.state.chatInputValue}],
-            chatInputValue: ''}) */
+        this.setState({ chatInputValue: "" })
 
         this.props.app.gameController.sendChatMessage(this.state.chatInputValue)
     }
@@ -43,7 +40,7 @@ class ChatBar extends Component {
             <div id="chatBar" className="chat-bar">
                 <div className="chat-history">
                     <ul className="chat-message-list">
-                        {this.state.chatHistory.map((msg, i) => this.chatMessage(msg.name, msg.message, i))}
+                        {this.state.chatHistory.map((msg, i) => this.chatMessage(msg.player, msg.message, i))}
                     </ul>
                 </div>
                 
@@ -56,10 +53,10 @@ class ChatBar extends Component {
         )
     }
 
-    chatMessage(name, message, i) {
+    chatMessage(player, message, i) {
         return (
-          <li key={`cm${i}`} className="chat-message">
-            <span className="chat-message-name">{name}: </span>
+          <li key={`cm${i}`} className={`chat-message ${(player.gid === this.props.app.state.myGid) ? "local-player" : ""}`}>
+            <span pid={player.gid} className="chat-message-name">{player.username}</span>
             <span className="chat-message-text">{message}</span>
           </li>
         )
