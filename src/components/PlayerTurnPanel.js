@@ -16,7 +16,10 @@ class PlayerTurnPanel extends Component {
     }
 
     rollAllDice(dice) {
-      this.dice.forEach( (_, i) => this.dieRefs[i].current.rollDieToValue(dice[i]) )
+      this.dice.forEach( (_, i) => { 
+        if (dice.length > i) 
+          this.dieRefs[i].current.rollDieToValue(dice[i]) 
+        else this.dieRefs[i].current.updateDieWithoutRolling(-1) } )
     }
 
     render () {

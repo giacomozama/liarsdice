@@ -6,14 +6,13 @@ class GameEventList extends React.Component {
         super(props)
 
         this.state = {
-            eventList: ['test0', 'test1', 'test2', 'test3', 'test4', 'test5']
+            eventList: []
         }
     }
 
     componentDidUpdate() {
         document.getElementsByClassName('game-event-list')[0].scrollIntoView(false);
     }
-
 
     render() {
         return (

@@ -14,9 +14,9 @@ class PlayerInputPanel extends React.Component {
             maxAmount: 36,
             minAmount: 0,
             minWCAmount: 0,
-            previousAmount: 0,
-            previousPips: 0,
-            previousPlayer: ""
+            previousAmount: null,
+            previousPips: null,
+            previousPlayer: null
         }
 
         this.amountPlusButton = <button onClick={() => this.incAmount()} className="btn plusminus-btn"><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></button>
@@ -27,14 +27,21 @@ class PlayerInputPanel extends React.Component {
     }
 
     showInputDialog(previousAmount, previousPips, previousPlayer) {
-        this.props.dimmerRef.current.dim()
+        if (this.props.app.dimmerRef.current)
+            this.props.app.dimmerRef.current.dim()
+        const newMinWCAmount = 
+            (previousAmount) ? 
+                ((previousPips !== 1) ?
+                    Math.floor(previousAmount / 2) + 1
+                    : previousAmount + 1)
+                : 1
         this.setState({
-            minAmount: previousAmount + 1,
-            currentAmount: previousAmount + 1,
-            minWCAmount: Math.floor(previousAmount / 2) + 1,
-            currentPips: previousPips,
-            previousAmount: previousAmount, 
-            previousPips: previousPips, 
+            minAmount: (previousAmount) ? (previousAmount + 1 > newMinWCAmount ? previousAmount + 1 : newMinWCAmount) : 1,
+            currentAmount: (previousAmount) ? previousAmount + 1 : 1,
+            minWCAmount: newMinWCAmount,
+            currentPips: (previousPips) ? previousPips : 2,
+            previousAmount: (previousAmount) ? previousAmount : 1, 
+            previousPips: (previousPips) ? previousPips : 2, 
             previousPlayer: previousPlayer,
             visible: true
         })
@@ -85,14 +92,14 @@ class PlayerInputPanel extends React.Component {
             }
             this.statementDieRef.current.updateDieWithoutRolling(this.state.currentPips - 1)
         }
-        
     }
 
     hide() {
         this.setState({
             visible: false
         })
-        this.props.dimmerRef.current.undim()
+        if (this.props.app.dimmerRef.current)
+            this.props.app.dimmerRef.current.undim()
     }
 
     render() {
@@ -100,8 +107,12 @@ class PlayerInputPanel extends React.Component {
             this.state.visible ?
                 <div className="guess-dialog">
                     <div className="guess-dialog-upper-panel">
-                        <div className="previous-statement-panel">
+                        { (this.state.previousPlayer) ? <div className="previous-statement-panel">
                             <b>{this.state.previousPlayer}</b>&nbsp;claims there's&nbsp;<b>{this.state.previousAmount}</b>&nbsp;x&nbsp;<Die pips={this.state.previousPips} />
+                        </div> : null }
+                        <div className="your-dice-label">Your dice:</div>
+                        <div className="guess-panel-die-tray">
+                            {this.props.app.findPlayerByGid(this.props.app.state.myGid).dice.map(d => <Die pips={d} />)}
                         </div>
                         <div className="statement-panel">
                             <div className="statement-subpanel-amount">
@@ -117,8 +128,14 @@ class PlayerInputPanel extends React.Component {
                         </div>
                     </div>
                     <div className="guess-dialog-lower-panel">
-                        <button className="btn btn-claim" onClick={() => {this.hide()}}><b>Claim</b> the above</button>
-                        <button className="btn btn-doubt" onClick={() => {this.hide()}}><b>Doubt</b> {this.state.previousPlayer}'s claim</button>
+                        <button className="btn btn-claim" onClick={() => {
+                            this.props.app.gameController.claim(this.state.currentAmount, this.state.currentPips)
+                            this.hide()
+                        }}><b>Claim</b> the above</button>
+                        { this.state.previousPlayer ? <button className="btn btn-doubt" onClick={() => {
+                            this.props.app.gameController.doubt()
+                            this.hide()
+                        }}><b>Doubt</b> {this.state.previousPlayer}'s claim</button> : null }
                     </div>
                 </div> : null)
     }

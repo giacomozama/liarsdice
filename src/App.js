@@ -8,6 +8,7 @@ import GameEventList from './components/GameEventList'
 import MenuScreen from './components/MenuScreen'
 import GameController from './components/GameController'
 import GameInfoControlPanel from './components/GameInfoControlPanel'
+import ErrorScreen from './components/ErrorScreen'
 
 export default class LiarsDice extends React.Component {
 
@@ -29,9 +30,15 @@ export default class LiarsDice extends React.Component {
     this.audioRef = React.createRef(this.refs.audioRef)
     this.chatBarRef = React.createRef(this.refs.chatBarRef)
     this.localPlayerPanelRef = React.createRef(this.refs.localPlayerPanelRef)
+    this.errorScreenRef = React.createRef(this.refs.errorScreenRef)
+    this.gameEventListRef = React.createRef(this.refs.gameEventListRef)
 
     this.gameController = new GameController(process.env.REACT_APP_BACKEND || 'http://localhost:8080')
     this.gameController.app = this;
+  }
+
+  findPlayerByGid(gid) {
+    return this.state.players.find((p) => p.gid === gid)
   }
 
   componentDidMount() {
@@ -64,10 +71,11 @@ export default class LiarsDice extends React.Component {
           <audio loop ref={this.audioRef} onPlay={() => this.audioRef.current.volume='0.5'} src={'/liarsdice/res/perudo.mp3'} autoPlay/>
           <Dimmer ref={this.dimmerRef}/>
           <div className="App-body">
-            <PlayerInputPanel ref={this.playerInputPanelRef} dimmerRef={this.dimmerRef}></PlayerInputPanel>
+            <ErrorScreen ref={this.errorScreenRef} dimmerRef={this.dimmerRef}></ErrorScreen>
+            <PlayerInputPanel ref={this.playerInputPanelRef} app={this}></PlayerInputPanel>
             <div className={`main-content ${this.state.currentPanelFading ? "concealed" : ""}`}>
               <div className="left-container">
-                <GameEventList></GameEventList>
+                <GameEventList ref={this.gameEventListRef}></GameEventList>
                 <GameInfoControlPanel app={this} audioRef={this.audioRef}></GameInfoControlPanel>
               </div>
               <div className="center-container">

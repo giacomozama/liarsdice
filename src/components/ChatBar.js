@@ -31,8 +31,10 @@ class ChatBar extends Component {
             this.props.app.playerInputPanelRef.current.showInputDialog(5, 6, "TEST PLAYER")
         if (this.state.chatInputValue.trim() === "/roll")
             this.props.app.localPlayerPanelRef.current.rollAllDice(
-                this.props.app.state.players.find(p => p.gid == this.props.app.state.myGid).dice
+                this.props.app.state.players.find(p => p.gid === this.props.app.state.myGid).dice
             )
+        if (this.state.chatInputValue.trim() === "/error")
+            this.props.app.errorScreenRef.current.showError("TEST ERROR")
 
         this.setState({ chatInputValue: "" })
 
@@ -60,8 +62,7 @@ class ChatBar extends Component {
     chatMessage(player, message, i) {
         return (
           <li key={`cm${i}`} className={`chat-message ${(player.gid === this.props.app.state.myGid) ? "local-player" : ""}`}>
-            <span pid={player.gid} className="chat-message-name">{player.username}</span>
-            <span className="chat-message-text">{message}</span>
+            <span className="chat-message-text"><span pid={player.gid} className="chat-message-name">{player.username}</span>{message}</span>
           </li>
         )
     }

@@ -38,7 +38,7 @@ class Die extends React.Component {
             case 6:
                 return faDiceSix
             default:
-                return null
+                return faTimes
         }
     }
 
