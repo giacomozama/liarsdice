@@ -8,8 +8,7 @@ class GameInfoControlPanel extends React.Component {
         super(props)
 
         this.state = { 
-            gameTimeSecs: 0,
-            numberOfDice: 36,
+            gameTimeSecs: 0
         };
     }
 
@@ -25,8 +24,7 @@ class GameInfoControlPanel extends React.Component {
             <div className='game-info-control-panel'>
                 <div className='info-bar'>
                         <div className='total-dice'>
-                            <FontAwesomeIcon icon={faDice}></FontAwesomeIcon><div className='no-of-dice'>{
-                                this.props.app.state.players.reduce((acc, p) => acc + p.dice.filter(d => d !== -1).length, 0)}</div></div>
+                        <FontAwesomeIcon icon={faDice}></FontAwesomeIcon><div className='no-of-dice'>{this.props.noOfDice}</div></div>
                         <div className='game-time'><FontAwesomeIcon icon={faClock}></FontAwesomeIcon>
                         <div className='game-clock'>{[...date.toISOString().substr(11, 8)].map((c,i) => <span key={'clock-char' + i} className="clock-char">{c}</span>)}</div>
                     </div>

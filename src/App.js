@@ -29,9 +29,11 @@ export default class LiarsDice extends React.Component {
     this.menuScreenRef = React.createRef(this.menuScreenRef)
     this.audioRef = React.createRef(this.refs.audioRef)
     this.chatBarRef = React.createRef(this.refs.chatBarRef)
-    this.localPlayerPanelRef = React.createRef(this.refs.localPlayerPanelRef)
     this.errorScreenRef = React.createRef(this.refs.errorScreenRef)
     this.gameEventListRef = React.createRef(this.refs.gameEventListRef)
+
+    this.previousPips = null
+    this.playerTurnPanelRefs = {}
 
     this.gameController = new GameController(process.env.REACT_APP_BACKEND || 'http://localhost:8080')
     this.gameController.app = this;
@@ -76,15 +78,15 @@ export default class LiarsDice extends React.Component {
             <div className={`main-content ${this.state.currentPanelFading ? "concealed" : ""}`}>
               <div className="left-container">
                 <GameEventList ref={this.gameEventListRef}></GameEventList>
-                <GameInfoControlPanel app={this} audioRef={this.audioRef}></GameInfoControlPanel>
+                <GameInfoControlPanel noOfDice={this.state.players.reduce((acc, p) => acc + p.dice.filter(d => d !== -1).length, 0)} audioRef={this.audioRef}></GameInfoControlPanel>
               </div>
               <div className="center-container">
                 {this.state.players.map((p, i) => {
-                  const isLocalPlayer = p.gid === this.state.myGid
+                  this.playerTurnPanelRefs[p.gid] = React.createRef()
                   return (
                     <PlayerTurnPanel 
-                      ref={(isLocalPlayer) ? this.localPlayerPanelRef : null}
-                      isLocalPlayer={isLocalPlayer}
+                      ref={this.playerTurnPanelRefs[p.gid]}
+                      isLocalPlayer={p.gid === this.state.myGid}
                       isActivePlayer={p.gid === this.state.activePlayerGid}
                       app={this}
                       key={"ptp" + i}

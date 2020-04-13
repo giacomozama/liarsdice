@@ -22,6 +22,12 @@ class PlayerTurnPanel extends Component {
         else this.dieRefs[i].current.updateDieWithoutRolling(-1) } )
     }
 
+    endOfRound(dice, highlightedPips) {
+      dice.forEach( (d, i) => this.dieRefs[i].current.updateDieWithoutRollingAndHighlightPips(d, highlightedPips) )
+      setTimeout(() => this.props.player.dice.forEach((_, i) =>
+        this.dieRefs[i].current.updateDieWithoutRolling(this.props.player.dice[i])), 5000)
+    }
+
     render () {
         return (
             <div 

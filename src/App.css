@@ -229,7 +229,11 @@ input {
   justify-content: center;
   align-items: center;
   font-size: 48px;
-  box-shadow: 0 3px 2px 0 rgba(0,0,0,0.2);
+  box-shadow: inset 0 0px 2px 0px rgba(0,0,0,0.2), 0 1px 2px 1px rgba(0,0,0,0.2);
+}
+
+.die.highlighted {
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2), inset 0 0px 4px 2px rgba(255,255,255,0.8);
 }
 
 .fa-question {
@@ -427,7 +431,7 @@ input {
   padding: 8px;
   border-radius: 10px;
   box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.4);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.1);
   justify-content: space-around;
 }
 

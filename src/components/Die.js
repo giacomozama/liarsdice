@@ -15,7 +15,8 @@ class Die extends React.Component {
 
         this.state = {
             pips: this.props.pips,
-            icon: this.getIconForPips(this.props.pips)
+            icon: this.getIconForPips(this.props.pips),
+            highlighted: false
         }
     }
 
@@ -43,7 +44,19 @@ class Die extends React.Component {
     }
 
     updateDieWithoutRolling(newPips) {
-        this.setState({pips: newPips, icon: this.getIconForPips(newPips)})
+        this.setState({
+            highlighted: false,
+            pips: newPips,
+            icon: this.getIconForPips(newPips)
+        })
+    }
+
+    updateDieWithoutRollingAndHighlightPips(newPips, highlightedPips) {
+        this.setState({
+            highlighted: (newPips === highlightedPips || newPips === 1),
+            pips: newPips,
+            icon: this.getIconForPips(newPips)
+        })
     }
 
     rollDieToValue(newPips) {
@@ -65,7 +78,7 @@ class Die extends React.Component {
 
     render() {
         return (
-            <div className="die">
+            <div className={`die${(this.state.highlighted) ? " highlighted" : ""}`}>
                 <FontAwesomeIcon icon={this.state.icon} />
             </div>)
     }

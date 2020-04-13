@@ -1,7 +1,5 @@
 import io from 'socket.io-client'
 import Player from '../model/Player'
-import React from 'react'
-import Die from '../components/Die'
 
 
 class GameController {
@@ -34,8 +32,8 @@ class GameController {
 
                 this.addEvent("Game started!")
 
-                if (this.app.localPlayerPanelRef.current)
-                    this.app.localPlayerPanelRef.current.rollAllDice(res.dice)
+                if (this.app.playerTurnPanelRefs[this.app.state.myGid].current)
+                    this.app.playerTurnPanelRefs[this.app.state.myGid].current.rollAllDice(res.dice)
 
                 setTimeout(() => {
                     if (this.app.playerInputPanelRef.current && this.app.state.myGid === res.active_player)
@@ -102,7 +100,7 @@ class GameController {
                 const doubter = this.app.findPlayerByGid(res.doubter)
                 const doubted = this.app.findPlayerByGid(res.doubted)
                 const loser = (doubter.gid === res.loser) ? doubter : doubted
-
+                
                 const eventString = `${doubter.username} doubted ${doubted.username}, ${loser.username} was wrong and lost 1 dice`
                 const eliminatedString = (res.keepsOnPlaying) ? "" : `${loser.username} was eliminated`
 
@@ -113,15 +111,25 @@ class GameController {
                     activePlayerGid: res.active_player  
                 })
 
+                Object.keys(res.round_dice).forEach(k =>
+                    this.app.playerTurnPanelRefs[k].current.endOfRound(res.round_dice[k], this.app.previousPips))
+
+                loser.dice.shift()
+                loser.dice.push(-1)
+
+                setTimeout(() => {
+                    this.app.findPlayerByGid(this.app.state.myGid).dice = res.dice 
+                    if (this.app.playerTurnPanelRefs[this.app.state.myGid].current)
+                    this.app.playerTurnPanelRefs[this.app.state.myGid].current.rollAllDice(res.dice)
+                }, 5000)
+                
+
                 setTimeout(() => {
                     if (this.app.state.myGid === res.active_player) {
                         if (this.app.playerInputPanelRef.current)
                             this.app.playerInputPanelRef.current.showInputDialog( null, null, null)
-                    } 
-                }, 5000)
-
-                if (this.app.localPlayerPanelRef.current)
-                this.app.localPlayerPanelRef.current.rollAllDice(res.dice)
+                    }
+                }, 10000)
             }
         })
 
@@ -213,6 +221,8 @@ class GameController {
                 return "⚄"
             case 6:
                 return "⚅"
+            default:
+                return null
         }
     }
 }
